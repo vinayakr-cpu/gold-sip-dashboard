@@ -1,1 +1,168 @@
-<!doctype html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Madurai Gold SIP Dashboard</title><style>:root{--bg:#ffffff;--surface:#fafafa;--border:#e5e7eb;--border-hover:#d1d5db;--text:#111827;--muted:#6b7280;--green:#059669;--red:#dc2626;--amber:#d97706;}*{box-sizing:border-box;}body{margin:0;padding:32px 16px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}.wrap{max-width:960px;margin:0 auto;}.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px;opacity:0;transform:translateY(12px);animation:fadeSlideUp 400ms ease forwards;transition:border-color 150ms ease,transform 150ms ease,box-shadow 150ms ease;margin-bottom:16px;}.card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04);}@keyframes fadeSlideUp{to{opacity:1;transform:translateY(0);}}.col-span-2{grid-column:span 2;}@media (max-width:720px){.bento{grid-template-columns:repeat(2,1fr);}}@media (max-width:480px){.bento{grid-template-columns:1fr;}.col-span-2{grid-column:span 1;}}.sub{font-size:12px;color:var(--muted);margin:0 0 8px;}.big-price{font-size:44px;font-weight:700;margin:0 0 8px;}.status-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin:2px 0;}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;}.dot.green{background:var(--green);}.dot.red{background:var(--red);}.chip-row{display:flex;gap:8px;margin-bottom:8px;}.chip{padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;height:28px;display:inline-flex;align-items:center;transform:scale(0.9);animation:chipIn 350ms cubic-bezier(0.34,1.56,0.64,1) forwards;animation-delay:150ms;}@keyframes chipIn{to{transform:scale(1);}}.chip.green{background:#ecfdf5;color:var(--green);}.chip.red{background:#fef2f2;color:var(--red);}.chip.amber{background:#fffbeb;color:var(--amber);}.rationale{font-size:14px;color:var(--text);margin:0;}.metric-big{font-size:24px;font-weight:700;margin:0 0 4px;}.metric-big.green{color:var(--green);}.metric-big.red{color:var(--red);}.muted{color:var(--muted);font-size:13px;margin:0;}.muted.green{color:var(--green);}.section-label{font-size:12px;font-weight:700;letter-spacing:0.06em;color:var(--muted);margin:8px 0 12px;}.details-item{margin-bottom:14px;}.details-item h4{font-size:15px;font-weight:700;margin:0 0 4px;}.details-item p{font-size:14px;color:var(--muted);margin:0;}.save-line{font-size:14px;color:var(--green);font-weight:600;margin:12px 0;}.tabs{display:inline-flex;background:#f3f4f6;padding:4px;border-radius:8px;margin-bottom:16px;}.tab-btn{padding:8px 16px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-size:13px;transition:all 150ms;font-family:inherit;}.tab-btn.active{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.08);color:var(--text);}.tab-btn:not(.active):hover{background:rgba(255,255,255,0.5);}.view-panel{display:none;}.view-panel.active{display:block;}.empty-state{padding:32px;text-align:center;color:var(--muted);font-size:14px;background:var(--surface);border-radius:8px;}table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--border);}th{color:var(--muted);font-weight:600;font-size:12px;}.signals-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}@media (max-width:600px){.signals-grid{grid-template-columns:1fr;}}.signal-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;transition:all 150ms;}.signal-card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04);}.signal-name{font-size:12px;text-transform:uppercase;color:var(--muted);margin:0 0 6px;letter-spacing:0.04em;}.signal-level{font-size:15px;font-weight:600;margin:0 0 6px;}.signal-impact{font-size:13px;color:#374151;margin:0;}.quote-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;}.quote-text{font-size:15px;margin:0 0 8px;}.byline{font-size:12px;color:var(--muted);margin:0;}.byline a{color:var(--text);text-decoration:underline;}footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border);}.footer-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:0.06em;margin:12px 0 6px;}.footer-text{font-size:12px;color:var(--muted);line-height:1.6;margin:0;}.updated{text-align:right;font-size:11px;color:var(--muted);margin-top:12px;}</style></head><body><div class='wrap'><div class='bento'><div class='card col-span-2' style='animation-delay:0ms;'><p class='sub'>Today's 22K gold price - Madurai</p><p class='big-price'><span id='cnt-price'>0</span></p><div class='status-row'><span class='dot red'></span><span>STALE - regional proxy, not a confirmed Madurai storefront rate</span></div><div class='status-row'><span>Source: The Hindu BusinessLine - Gold Rate Today - 2026-08-31</span></div></div><div class='card col-span-2' style='animation-delay:40ms;'><p class='sub'>Verdict</p><div class='chip-row'><span class='chip red'>WAIT</span><span class='chip red'>LOW confidence</span></div><p class='rationale'>Regional 22K gold is pulling back but today's Madurai rate isn't confirmed live - hold 2-3 days and recheck.</p></div><div class='card' style='animation-delay:80ms;'><p class='sub'>vs Yesterday</p><p class='metric-big green'><span id='cnt-yday'>0</span></p><p class='muted'>National 22K/g print, 31 Aug vs 30 Aug</p></div><div class='card' style='animation-delay:120ms;'><p class='sub'>vs Last Week</p><p class='metric-big green'><span id='cnt-7d'>0</span></p><p class='muted'>Directional proxy (Mumbai bullion 22K/10g table)</p></div><div class='card' style='animation-delay:160ms;'><p class='sub'>SIP window</p><p class='metric-big'><span id='cnt-days'>0</span> days left</p><p class='muted'>Deadline: 25 Sep</p></div><div class='card' style='animation-delay:200ms;'><p class='sub'>Best day</p><p class='metric-big'>2-3 Sep*</p><p class='muted green'>Save ~INR 175 (~0.012 g)</p></div></div><div class='card'><p class='section-label'>VERDICT DETAILS</p><div class='details-item'><h4>1. Price pullback</h4><p>Tamil Nadu 22K retail gold slid from roughly INR 15,010/g-equivalent around 26 Aug to INR 14,370/g by 31 Aug, a ~4% multi-day decline.</p></div><div class='details-item'><h4>2. Fed hawkish lean</h4><p>The dollar index is near an eight-day high on revived September rate-hike bets, a headwind that could pressure gold further before the SIP deadline.</p></div><div class='details-item'><h4>3. Data freshness gap</h4><p>Only one same-day (31 Aug) source was confirmed and it is a national/Tamil Nadu benchmark, not a Madurai-specific retailer quote, so live confidence is low.</p></div><div class='details-item'><h4>4. Long SIP runway</h4><p>August's 25th deadline has passed, so the window now runs to 25 September 2026, leaving 25+ days to find a better entry.</p></div><div class='details-item'><h4>5. Central bank demand cooling</h4><p>J.P. Morgan Global Research flags cooling central-bank gold buying, reducing one pillar of near-term upside pressure.</p></div><p class='save-line'>Waiting 2-3 days for a confirmed rate could save ~INR 175 (~0.012 g) per SIP of INR 15,000.</p><p class='muted'>* Recommended re-check window: 2026-09-02 to 2026-09-03, once a confirmed Madurai retailer rate is available and the pullback is confirmed to hold. If the Fed leans hawkish at its September meeting the current pullback could reverse quickly, so don't wait past the first week of the window.</p></div><div class='card'><p class='section-label'>PRICE HISTORY</p><div class='tabs'><button class='tab-btn active' data-view='10d'>10D</button><button class='tab-btn' data-view='30d'>30D</button><button class='tab-btn' data-view='60d'>60D</button><button class='tab-btn' data-view='thismonth'>This month</button><button class='tab-btn' data-view='lastmonth'>Last month</button></div><div class='view-panel active' data-view='10d'><div class='empty-state'>History building - full 10-day view will populate once more days of data are logged.</div></div><div class='view-panel' data-view='30d'><div class='empty-state'>History building - full 30-day view will populate once more days of data are logged.</div></div><div class='view-panel' data-view='60d'><div class='empty-state'>History building - full 60-day view will populate once more days of data are logged.</div></div><div class='view-panel' data-view='thismonth'><div class='empty-state'>History building - full this-month view will populate once more days of data are logged.</div></div><div class='view-panel' data-view='lastmonth'><div class='empty-state'>History building - full last-month view will populate once more days of data are logged.</div></div><p class='muted'>The Gold SIP price-log spreadsheet could not be resolved this run (no title-search capability was available), so history is in a first-run build-up state with no charted rows yet.</p></div><p class='section-label'>MARKET SIGNALS</p><div class='signals-grid'><div class='signal-card'><p class='signal-name'>International spot gold (COMEX/Kitco)</p><p class='signal-level'>~$4,454.40/oz bid (30 Aug 2026), down 3.18% on the day</p><p class='signal-impact'>Gold impact: A steep single-day COMEX drop signals near-term softness that should filter into INR gold within a day or two, mildly favourable for buyers.</p></div><div class='signal-card'><p class='signal-name'>USD/INR</p><p class='signal-level'>INR 95.15/USD (31 Aug 2026), down from a weekly high of INR 95.81 (24 Aug)</p><p class='signal-impact'>Gold impact: A firmer rupee mildly lowers the landed cost of gold, a small favourable tailwind for INR gold buyers.</p></div><div class='signal-card'><p class='signal-name'>US Fed rate expectations</p><p class='signal-level'>Dollar index near an eight-day high on revived September rate-hike bets</p><p class='signal-impact'>Gold impact: A hawkish Fed lean is a headwind for non-yielding gold and could cap near-term upside, unfavourable for prices.</p></div><div class='signal-card'><p class='signal-name'>Central bank gold buying</p><p class='signal-level'>J.P. Morgan Global Research notes official-sector demand appears to have cooled</p><p class='signal-impact'>Gold impact: Cooling central-bank purchases removes a structural support pillar, a mild bearish signal for the medium term.</p></div><div class='signal-card'><p class='signal-name'>Geopolitical risk (Strait of Hormuz)</p><p class='signal-level'>Ongoing crisis since February 2026 continues to add a risk premium to gold and oil</p><p class='signal-impact'>Gold impact: An active geopolitical risk premium keeps a safe-haven floor under gold, supportive even amid short-term dips.</p></div><div class='signal-card'><p class='signal-name'>Tamil Nadu regional retail gold trend</p><p class='signal-level'>22K per gram slid from ~INR 15,010/g around 26 Aug to INR 14,370/g by 31 Aug</p><p class='signal-impact'>Gold impact: A clear multi-day regional retreat is favourable for SIP buyers who can wait a few more days for confirmation the dip holds.</p></div><div class='signal-card'><p class='signal-name'>Nifty 50 / Sensex direction</p><p class='signal-level'>Indices opened higher on 31 Aug 2026 on GST-reform optimism</p><p class='signal-impact'>Gold impact: Improving equity risk appetite is a mild negative for gold as a competing safe-haven allocation.</p></div><div class='signal-card'><p class='signal-name'>Medium-term analyst price forecast</p><p class='signal-level'>J.P. Morgan Global Research expects gold to push toward $6,000/oz by end-2026</p><p class='signal-impact'>Gold impact: A bullish multi-month institutional call argues against waiting too long into dips despite today's short-term pullback.</p></div><div class='signal-card'><p class='signal-name'>India festival/wedding season demand</p><p class='signal-level'>Approaching Sep-Nov wedding and festival season (Onam/Ganesh Chaturthi/Navratri run-up)</p><p class='signal-impact'>Gold impact: Seasonal buying typically firms local retail premiums as the season nears, a mild supportive factor for physical demand.</p></div></div><p class='section-label'>ANALYST VIEW</p><div class='quote-card'><p class='quote-text'>“Gold is the new gold”</p><p class='byline'>Pippa Malmgren, former Special Assistant to the U.S. President and National Economic Council member - <a href='https://www.cnbc.com/2026/08/12/gold-prices-metals-fed-rate-hike-inflation.html' target='_blank' rel='noopener'>CNBC</a></p></div><footer><p class='footer-label'>METHODOLOGY</p><p class='footer-text'>Prices are compiled from publicly available retail and bullion sources and cross-checked against international spot gold and USD/INR movement; a rate is marked live only when at least two same-day sources agree. Today's confidence is LOW because only one same-day source (a national/Tamil Nadu print, not a Madurai storefront) was confirmed. Colors follow one rule throughout: green means today is cheaper than the comparison point, red means pricier. This dashboard is informational only and is not investment advice.</p><p class='footer-label'>SOURCES</p><p class='footer-text'>The Hindu BusinessLine, Groww, LiveChennai/GRT Jewellery, Kitco, Wise, Trading Economics, J.P. Morgan Global Research, IG, The Hans India, CNBC</p><p class='updated'>Last updated: 2026-08-31T14:05:51Z</p></footer></div><script>document.querySelectorAll('.tab-btn').forEach(function(btn){btn.addEventListener('click',function(){var view=btn.getAttribute('data-view');document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.view-panel').forEach(function(p){if(p.getAttribute('data-view')===view){p.style.opacity=0;p.classList.add('active');p.style.display='block';setTimeout(function(){p.style.transition='opacity 200ms';p.style.opacity=1;},10);}else{p.classList.remove('active');p.style.display='none';}});});});function countUp(id,end,duration,prefix,suffix,decimals){var el=document.getElementById(id);if(!el)return;var startTime=null;function step(ts){if(!startTime)startTime=ts;var progress=Math.min((ts-startTime)/duration,1);var val=end*progress;var shown=decimals?val.toFixed(decimals):Math.round(val).toLocaleString('en-IN');el.textContent=(prefix||'')+shown+(suffix||'');if(progress<1)requestAnimationFrame(step);}requestAnimationFrame(step);}countUp('cnt-price',14370,800,'INR ',' / gram',0);countUp('cnt-yday',-135,800,'',' (-0.93%)',0);countUp('cnt-7d',-526,800,'',' (-3.53%)',0);countUp('cnt-days',25,800,'','',0);var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.style.opacity=1;io.unobserve(entry.target);}});});document.querySelectorAll('.card').forEach(function(c){io.observe(c);});</script></body></html>
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Madurai Gold SIP Dashboard</title><style>
+:root{--bg:#ffffff;--surface:#fafafa;--border:#e5e7eb;--border-hover:#d1d5db;--text:#111827;--muted:#6b7280;--green:#059669;--red:#dc2626;--amber:#d97706;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+.container{max-width:960px;margin:0 auto;padding:32px 16px;}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:768px){.bento{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.bento{grid-template-columns:1fr;}.col-span-2{grid-column:span 1 !important;}}
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px;transition:all 150ms ease;opacity:0;transform:translateY(12px);animation:fadeSlideUp 400ms ease forwards;}
+.card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
+@keyframes fadeSlideUp{to{opacity:1;transform:translateY(0);}}
+.col-span-2{grid-column:span 2;}
+.subheading{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;margin:0 0 8px;}
+.big-price{font-size:44px;font-weight:700;margin:0;}
+.status-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--muted);}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.dot.green{background:var(--green);}
+.dot.red{background:var(--red);}
+.chip{display:inline-flex;align-items:center;padding:4px 12px;height:28px;border-radius:14px;font-size:13px;font-weight:600;}
+.chip.green{background:rgba(5,150,105,.1);color:var(--green);}
+.chip.red{background:rgba(220,38,38,.1);color:var(--red);}
+.chip.amber{background:rgba(217,119,6,.1);color:var(--amber);}
+.chip-row{display:flex;gap:8px;transform:scale(.9);opacity:0;animation:scaleIn 300ms ease forwards;animation-delay:200ms;}
+@keyframes scaleIn{to{transform:scale(1);opacity:1;}}
+.rationale{font-size:14px;margin-top:8px;}
+.big-number{font-size:24px;font-weight:700;margin:0;}
+.muted{color:var(--muted);}
+.green-text{color:var(--green);}
+.red-text{color:var(--red);}
+.amber-text{color:var(--amber);}
+.section-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;margin:0 0 12px;font-weight:600;}
+.container>.card{margin-top:16px;}
+.vd-item{margin-bottom:16px;}
+.vd-item h4{font-size:15px;font-weight:700;margin:0 0 4px;}
+.vd-item p{font-size:14px;color:var(--muted);margin:0;}
+.tabs{display:inline-flex;background:#f3f4f6;padding:4px;border-radius:8px;margin-bottom:16px;}
+.tab-btn{padding:8px 16px;border:none;background:transparent;border-radius:6px;cursor:pointer;transition:all 150ms;font-size:13px;font-family:inherit;}
+.tab-btn.active{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.08);color:var(--text);}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,.5);}
+.view-panel{display:none;opacity:0;transition:opacity 200ms;}
+.view-panel.active{display:block;opacity:1;}
+.empty-state{font-size:14px;color:var(--muted);padding:24px;text-align:center;background:var(--surface);border-radius:8px;}
+.signals-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:480px){.signals-grid{grid-template-columns:1fr;}}
+.signal-card{border:1px solid var(--border);border-radius:8px;padding:16px;transition:all 150ms ease;}
+.signal-card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.04);}
+.signal-name{font-size:12px;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+.signal-level{font-size:15px;font-weight:600;margin:0 0 8px;}
+.signal-impact{font-size:13px;color:#374151;margin:0;}
+.quote-card{border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;}
+.quote-card:last-child{margin-bottom:0;}
+.quote-text{font-size:15px;margin:0 0 8px;}
+.byline{font-size:12px;color:var(--muted);}
+.byline a{color:var(--text);text-decoration:underline;}
+footer{margin-top:32px;font-size:12px;color:var(--muted);}
+.footer-label{font-weight:600;text-transform:uppercase;font-size:11px;margin:0 0 4px;}
+footer p{margin:0 0 16px;}
+.timestamp{text-align:right;font-size:11px;color:var(--muted);margin-top:16px;}
+</style></head><body>
+<div class='container'>
+<div class='bento'>
+<div class='card col-span-2'><p class='subheading'>Today's 22K gold price - Madurai</p><p class='big-price'><span data-countup='14350' data-prefix='INR ' data-suffix=' / gram'>INR 0 / gram</span></p><div class='status-row'><span class='dot red'></span><span>Not confirmed live - retailer-leaning midpoint - 2026-09-13</span></div></div>
+<div class='card col-span-2'><p class='subheading'>Verdict</p><div class='chip-row'><span class='chip amber'>WAIT</span><span class='chip amber'>MEDIUM</span></div><p class='rationale'>Gold is easing on Fed rate-hike bets; wait a few days past the Sep 16 FOMC before buying this month's SIP.</p></div>
+<div class='card'><p class='subheading'>vs Yesterday</p><p class='big-number muted'>N/A</p><p class='muted' style='font-size:12px;margin:4px 0 0;'>No confirmed same-day-vs-yesterday reading</p></div>
+<div class='card'><p class='subheading'>vs Last Week</p><p class='big-number muted'>N/A</p><p class='muted' style='font-size:12px;margin:4px 0 0;'>7-day Madurai series unavailable this run</p></div>
+<div class='card'><p class='subheading'>SIP window</p><p class='big-number'><span data-countup='12' data-suffix=' days left'>0 days left</span></p><p class='muted' style='font-size:12px;margin:4px 0 0;'>Deadline: 25 Sep</p></div>
+<div class='card'><p class='subheading'>Best day</p><p class='big-number'>17 Sep</p><p class='green-text' style='font-size:12px;margin:4px 0 0;'>Save ~INR 225 (~0.016 g)</p></div>
+</div>
+
+<div class='card'>
+<p class='section-label'>VERDICT DETAILS</p>
+<div class='vd-item'><h4>1. Fed hike odds</h4><p>FOMC meets 16 Sep 2026 with roughly 55-59% odds of a 25bp hike, a hawkish setup that has already pulled COMEX gold down from about $4,522/oz (3 Sep) toward roughly $4,057/oz.</p></div>
+<div class='vd-item'><h4>2. Elevated Treasury yields</h4><p>The US 10-year yield is near 4.92-4.97%, close to multi-year highs, raising the opportunity cost of holding non-yielding gold.</p></div>
+<div class='vd-item'><h4>3. Madurai rate uncertainty</h4><p>Same-day Madurai retailer quotes could not be confirmed; only a national aggregator (INR 14,170/g) and a probable-live city feed (INR 14,505/g) were usable, a spread of about 2.3%.</p></div>
+<div class='vd-item'><h4>4. Seasonal demand floor</h4><p>Central-bank buying (~50 tonnes/month per Goldman Sachs) and the approaching Oct-Feb wedding season should limit how far the correction runs.</p></div>
+<div class='vd-item'><h4>5. SIP deadline cushion</h4><p>With 12 days left until the 25 Sep deadline, there is room to watch the 16 Sep Fed decision before committing this month's INR 15,000 SIP.</p></div>
+<p class='green-text' style='font-size:14px;font-weight:600;margin:0 0 8px;'>Expected saving by waiting: ~INR 225 (~0.016 g) if bought on 17 Sep instead of today.</p>
+<p class='muted' style='font-size:12px;margin:0;'>Wedding-season demand builds through October, so a short wait of a few days past the Fed decision is preferable to deferring into next month.</p>
+</div>
+
+<div class='card'>
+<p class='section-label'>PRICE HISTORY</p>
+<div class='tabs'>
+<button class='tab-btn active' data-target='10d'>10D</button>
+<button class='tab-btn' data-target='30d'>30D</button>
+<button class='tab-btn' data-target='60d'>60D</button>
+<button class='tab-btn' data-target='thismonth'>This month</button>
+<button class='tab-btn' data-target='lastmonth'>Last month</button>
+</div>
+<div class='view-panel active' data-view='10d'><div class='empty-state'>History building - full 10-day view will populate once more days of data are logged.</div></div>
+<div class='view-panel' data-view='30d'><div class='empty-state'>History building - full 30-day view will populate once more days of data are logged.</div></div>
+<div class='view-panel' data-view='60d'><div class='empty-state'>History building - full 60-day view will populate once more days of data are logged.</div></div>
+<div class='view-panel' data-view='thismonth'><div class='empty-state'>History building - full this-month view will populate once more days of data are logged.</div></div>
+<div class='view-panel' data-view='lastmonth'><div class='empty-state'>History building - full last-month view will populate once more days of data are logged.</div></div>
+</div>
+
+<div class='card'>
+<p class='section-label'>MARKET SIGNALS</p>
+<div class='signals-grid'>
+<div class='signal-card'><p class='signal-name'>International spot gold (COMEX/Kitco)</p><p class='signal-level'>~$4,056.60/oz vs $4,522/oz peak (3 Sep)</p><p class='signal-impact'>Gold impact: sharp pullback in the international leg is pulling landed INR gold cost down and is the single biggest driver of today's softer rate.</p></div>
+<div class='signal-card'><p class='signal-name'>USD/INR</p><p class='signal-level'>Range 94.375-95.725 over the week to 11 Sep</p><p class='signal-impact'>Gold impact: a softer rupee partially offsets falling dollar gold, cushioning but not reversing the decline in INR gold.</p></div>
+<div class='signal-card'><p class='signal-name'>US Fed rate expectations (FOMC 16 Sep)</p><p class='signal-level'>~55-59% odds of a 25bp hike</p><p class='signal-impact'>Gold impact: hawkish repricing toward a hike is bearish for non-yielding gold and explains most of the September pullback.</p></div>
+<div class='signal-card'><p class='signal-name'>US 10-year Treasury yield</p><p class='signal-level'>~4.92-4.97%, near multi-year highs</p><p class='signal-impact'>Gold impact: elevated real yields raise the opportunity cost of holding gold, adding incremental bearish pressure.</p></div>
+<div class='signal-card'><p class='signal-name'>Nifty 50 / Indian equities</p><p class='signal-level'>Down for a fifth straight week</p><p class='signal-impact'>Gold impact: weak local equities modestly support domestic gold's safe-haven appeal, a mild offset to the global bearish pull.</p></div>
+<div class='signal-card'><p class='signal-name'>Crude oil / India CPI-WPI</p><p class='signal-level'>Oil firm; Aug 2026 CPI contained within RBI band</p><p class='signal-impact'>Gold impact: firmer oil raises import-inflation risk, a mild structural support for gold even as global gold softens.</p></div>
+<div class='signal-card'><p class='signal-name'>Central bank gold buying</p><p class='signal-level'>~50 tonnes/month in 2026; 289 tonnes in Q2 2026</p><p class='signal-impact'>Gold impact: sustained central-bank demand provides a structural floor limiting how far the correction runs.</p></div>
+<div class='signal-card'><p class='signal-name'>India festival / wedding season demand</p><p class='signal-level'>Wedding season (Oct-Feb) approaching</p><p class='signal-impact'>Gold impact: rising retail and jewellery demand into the festive window should support Madurai premiums.</p></div>
+<div class='signal-card'><p class='signal-name'>Geopolitical risk (Iran-US tensions)</p><p class='signal-level'>Unresolved, episodic</p><p class='signal-impact'>Gold impact: any escalation would trigger a quick safe-haven bid and could reverse the current pullback within days.</p></div>
+<div class='signal-card'><p class='signal-name'>MCX technical levels</p><p class='signal-level'>Support Rs 1.50-1.52 lakh/10g, resistance Rs 1.60 lakh/10g</p><p class='signal-impact'>Gold impact: a break below Rs 1.48 lakh/10g would confirm further near-term downside for INR gold.</p></div>
+</div>
+</div>
+
+<div class='card'>
+<p class='section-label'>ANALYST VIEW</p>
+<div class='quote-card'><p class='quote-text'>&ldquo;Fed Governor Christopher Waller indicated he could support keeping rates unchanged at the Sep 15-16 meeting if inflation keeps moderating, but left tightening on the table.&rdquo;</p><p class='byline'>Dipen Pradhan (paraphrasing Fed Governor Christopher Waller) - <a href='https://www.moneycontrol.com/news/business/personal-finance/gold-price-prediction-5-key-factors-that-could-push-prices-to-rs-1-60-lakh-14023026.html' target='_blank' rel='noopener' style='color:#111827;text-decoration:underline;'>Moneycontrol</a></p></div>
+<div class='quote-card'><p class='quote-text'>&ldquo;Gold saw volatile moves as profit-booking continued, followed by a sharp correction after the Fed indicated the possibility of a rate hike.&rdquo;</p><p class='byline'>Commodity analysts, cited by Dipen Pradhan - <a href='https://www.moneycontrol.com/news/business/personal-finance/gold-price-prediction-5-key-factors-that-could-push-prices-to-rs-1-60-lakh-14023026.html' target='_blank' rel='noopener' style='color:#111827;text-decoration:underline;'>Moneycontrol</a></p></div>
+</div>
+
+<footer>
+<p class='footer-label'>Methodology</p>
+<p>Today's headline price is a retailer-leaning midpoint of the only two usable same-day-or-live readings (a national aggregator and a Madurai city feed); jeweller pages carrying cached June-August dates were excluded as stale. Confidence is MEDIUM because the historical price log could not be read this run, leaving day-over-day and week-over-week deltas unavailable. Delta colors: cheaper than reference is green, pricier is red. Informational only, not investment advice.</p>
+<p class='footer-label'>Sources</p>
+<p>Goodreturns, Groww, LiveChennai (GRT Jewellers & Joyalukkas Madurai), TheHinduBusinessLine, Kitco, Moneycontrol, Wise, Reuters, CentralBank.watch, Yahoo Finance, TradingEconomics, FRED, NDTV Profit, IIFL, Hindustan Times</p>
+<p class='timestamp'>Last updated: 2026-09-13T14:06:34Z</p>
+</footer>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var tabs=document.querySelectorAll('.tab-btn');
+var panels=document.querySelectorAll('.view-panel');
+tabs.forEach(function(btn){
+btn.addEventListener('click',function(){
+tabs.forEach(function(b){b.classList.remove('active');});
+btn.classList.add('active');
+var target=btn.getAttribute('data-target');
+panels.forEach(function(p){
+if(p.getAttribute('data-view')===target){p.style.opacity=0;setTimeout(function(){p.classList.add('active');requestAnimationFrame(function(){p.style.opacity=1;});},50);}
+else{p.classList.remove('active');}
+});
+});
+});
+document.querySelectorAll('[data-countup]').forEach(function(el){
+var end=parseFloat(el.getAttribute('data-countup'));
+var prefix=el.getAttribute('data-prefix')||'';
+var suffix=el.getAttribute('data-suffix')||'';
+var start=0,duration=800,startTime=null;
+function step(ts){
+if(!startTime)startTime=ts;
+var progress=Math.min((ts-startTime)/duration,1);
+var value=Math.round(start+(end-start)*progress);
+el.textContent=prefix+value.toLocaleString('en-IN')+suffix;
+if(progress<1){requestAnimationFrame(step);}
+}
+requestAnimationFrame(step);
+});
+var cards=document.querySelectorAll('.card');
+var io=new IntersectionObserver(function(entries){
+entries.forEach(function(entry){
+if(entry.isIntersecting){
+entry.target.style.animationPlayState='running';
+io.unobserve(entry.target);
+}
+});
+},{threshold:0.1});
+cards.forEach(function(c,i){c.style.animationDelay=(i*40)+'ms';io.observe(c);});
+});
+</script>
+</body></html>
