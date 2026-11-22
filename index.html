@@ -4,402 +4,363 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>Madurai Gold SIP Dashboard</title>
-<script>document.documentElement.className='js';</script>
+<script>document.documentElement.classList.add('js')</script>
 <style>
 :root{--bg:#ffffff;--surface:#fafafa;--border:#e5e7eb;--border-hover:#d1d5db;--text:#111827;--muted:#6b7280;--green:#059669;--red:#dc2626;--amber:#d97706}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}
-a{color:#111827;text-decoration:underline}
-.wrap{max-width:960px;margin:0 auto;padding:24px 16px 48px}
-.card{background:#ffffff;border:1px solid var(--border);border-radius:8px;padding:20px;transition:all 150ms ease;margin-bottom:16px}
-.js .card{opacity:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--surface);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px;transition:border-color 150ms ease,transform 150ms ease,box-shadow 150ms ease}
 .card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
-.card.in{opacity:1;animation:fadeSlideUp .55s ease forwards}
-.card.done{opacity:1}
-@keyframes fadeSlideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes chipPop{0%{opacity:0;transform:scale(.9)}70%{opacity:1;transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
-.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
-.bento .card{margin-bottom:0}
+.js .card{opacity:0}
+.js .card.in{opacity:1;animation:fadeSlideUp 420ms ease backwards}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.col{display:grid;gap:12px}
 .span2{grid-column:span 2}
-.sub{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px}
-.price{font-size:44px;font-weight:700;letter-spacing:-.5px;line-height:1.1;margin:2px 0 12px}
-.meta{font-size:12px;color:var(--muted);line-height:1.6}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle}
-.chips{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;height:28px;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid;opacity:0;animation:chipPop .45s cubic-bezier(.34,1.56,.64,1) .35s both}
-.chips .chip:nth-child(2){animation-delay:.5s}
-.chip.wait{color:var(--red);border-color:var(--red)}
-.chip.med{color:var(--amber);border-color:var(--amber)}
-.chip.buy{color:var(--green);border-color:var(--green)}
-.rationale{font-size:14px}
-.big{font-size:32px;font-weight:700;letter-spacing:-.4px;line-height:1.15;margin:2px 0 6px}
-.mid{font-size:24px;font-weight:700;margin:2px 0 6px}
-.green{color:var(--green)}
-.red{color:var(--red)}
-.amber{color:var(--amber)}
-.note{font-size:12px;color:var(--muted);line-height:1.6}
-.label{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
-.reasons{list-style:none;counter-reset:r}
-.reasons li{counter-increment:r;position:relative;padding-left:32px;margin-bottom:14px}
-.reasons li:before{content:counter(r);position:absolute;left:0;top:0;width:22px;height:22px;border:1px solid var(--border);border-radius:50%;font-size:12px;font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center}
-.rh{font-size:15px;font-weight:700}
-.rs{font-size:14px;color:var(--muted);margin-top:2px}
-.save{color:var(--green);font-weight:600;font-size:14px;margin-top:6px}
-.abort{font-size:13px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.xnote{font-size:12px;color:var(--muted);margin-top:10px}
-.tabs{display:inline-flex;background:#f3f4f6;padding:4px;border-radius:8px;gap:2px;margin-bottom:16px;flex-wrap:wrap}
-.tabbtn{padding:8px 16px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all 150ms;font-family:inherit}
-.tabbtn:hover{background:rgba(255,255,255,.5)}
-.tabbtn.active{background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,0.08);color:#111827}
-.tabbtn:focus-visible{outline:2px solid #d1d5db;outline-offset:2px}
-.view{display:none;opacity:0;transition:opacity .2s ease}
-.view.on{opacity:1}
-.legend{display:flex;gap:16px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}
-.sw{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px}
-.sw.solid{background:#374151}
-.sw.dash{border:1.5px dashed #6b7280}
-.sw.best{border:2px solid var(--green)}
-.lgnote{margin-left:auto}
-.chart{width:100%;height:auto;display:block}
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px}
-th{text-align:left;font-size:11px;letter-spacing:.05em;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
-td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
-td.wr{white-space:normal}
-tbody tr:last-child td{border-bottom:none}
-.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid var(--border);color:var(--muted)}
-.tag.proj{border-style:dashed}
-.tag.best{border-color:var(--green);color:var(--green)}
-.takeaway{margin-top:12px;font-size:13px}
-.empty{padding:28px 12px;color:var(--muted);font-size:13px;text-align:center}
-.siggrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sig{border:1px solid var(--border);border-radius:8px;padding:14px;transition:all 150ms ease}
+.sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+.price{font-size:44px;font-weight:700;letter-spacing:-0.02em;line-height:1.05}
+.price small{font-size:16px;font-weight:400;color:var(--muted);letter-spacing:0}
+.meta{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6}
+.meta + .meta{margin-top:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:1px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;height:28px;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;color:#fff;animation:chipPop 320ms 280ms ease backwards}
+.chip.buy{background:var(--green)}
+.chip.med{background:var(--amber)}
+@keyframes chipPop{0%{transform:scale(0.9);opacity:0}60%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
+.rat{font-size:14px;margin-top:12px}
+.bign{font-size:28px;font-weight:700;letter-spacing:-0.01em}
+.bign2{font-size:24px;font-weight:700}
+.mini{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+.g{color:var(--green)}.r{color:var(--red)}.f{color:var(--muted)}
+.seclab{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.vd{list-style:none;counter-reset:vd}
+.vd li{padding:12px 0;border-bottom:1px solid var(--border);counter-increment:vd}
+.vd li:last-child{border-bottom:none;padding-bottom:4px}
+.vh{font-size:15px;font-weight:700}
+.vh:before{content:counter(vd);display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:600;align-items:center;justify-content:center;margin-right:10px;vertical-align:-5px}
+.vd p{font-size:14px;color:var(--muted);margin-top:4px;padding-left:32px;line-height:1.55}
+.cons{font-size:13px;line-height:1.55;margin-top:12px}
+.riskline{font-size:13px;line-height:1.55;margin-top:10px;color:var(--red)}
+.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:10px}
+.hint{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.tabs{display:inline-flex;background:#f3f4f6;padding:4px;border-radius:8px;gap:2px;flex-wrap:wrap;margin-bottom:16px}
+.tabbtn{padding:8px 16px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);font-family:inherit;transition:all 150ms}
+.tabbtn:hover{background:rgba(255,255,255,0.5);color:var(--text)}
+.tabbtn.active{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.08);color:var(--text);font-weight:600}
+.view{display:none;transition:opacity 200ms ease}
+.view.active{display:block}
+svg.chart{width:100%;height:auto;display:block}
+.ax{font-size:10px;fill:var(--muted)}
+.grid{stroke:var(--border);stroke-width:1}
+.axis{stroke:var(--border-hover);stroke-width:1}
+.xl{font-size:10px;fill:var(--muted);text-anchor:middle}
+.xl.t{fill:var(--text);font-weight:600}
+.bar{pointer-events:all}
+.proj{fill:none;stroke:var(--muted);stroke-dasharray:4 3;stroke-width:1.5}
+.best{fill:none;stroke:var(--green);stroke-width:2}
+.legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px;border-radius:2px}
+.sw-a{background:#374151}
+.sw-p{border:1.5px dashed var(--muted)}
+.sw-b{border:2px solid var(--green)}
+.tscroll{overflow-x:auto;margin-top:14px}
+table.hist{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+.hist th{font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);font-weight:600;white-space:nowrap}
+.hist td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+.hist tr:nth-child(even) td{background:var(--surface)}
+.hist tr.today td{background:var(--surface);font-weight:600}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.tag.proj{color:var(--amber);border-color:var(--amber)}
+.tag.best{color:var(--green);border-color:var(--green)}
+.takeaway{font-size:13px;line-height:1.55;margin-top:14px}
+.chartnote{font-size:11px;color:var(--muted);line-height:1.55;margin-top:8px}
+.empty{padding:36px 16px;text-align:center;color:var(--muted);font-size:14px;background:var(--surface);border-radius:8px}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sig{border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:all 150ms ease}
 .sig:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.04)}
-.signame{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-.sigcur{font-size:15px;font-weight:600;margin-bottom:8px}
-.sigimp{font-size:13px;color:#374151}
-.ilab{font-weight:700;font-size:12px;color:var(--muted)}
-.sigsrc{font-size:12px;color:var(--muted);margin-top:8px}
-.q{border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px}
-.qt{font-size:15px;line-height:1.5}
-.by{font-size:12px;color:var(--muted);margin-top:8px}
-.meth{font-size:12px;color:var(--muted);line-height:1.65}
-.srcs{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
-.upd{font-size:11px;color:var(--muted);text-align:right;margin-top:14px}
-#pop{position:fixed;display:none;background:#111827;color:#ffffff;padding:8px 10px;border-radius:6px;font-size:12px;line-height:1.45;pointer-events:none;z-index:50;max-width:250px;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
-.count{font-variant-numeric:tabular-nums}
-@media(max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}.siggrid{grid-template-columns:1fr}.lgnote{display:none}}
-@media(max-width:560px){.bento{grid-template-columns:1fr}.span2{grid-column:auto}.price{font-size:36px}.big{font-size:28px}}
-@media(prefers-reduced-motion:reduce){.js .card{opacity:1;animation:none}.chip{opacity:1;animation:none}}
+.sig .name{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;font-weight:600}
+.sig .cur{font-size:15px;font-weight:600;margin:7px 0 6px;line-height:1.4}
+.sig .arrow{margin-right:4px}
+.sig .imp{font-size:13px;color:#374151;line-height:1.5}
+.sig .imp b{color:var(--muted);font-weight:600}
+.sig .src{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.5}
+.quotes{display:grid;gap:12px}
+.q{border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.q p{font-size:15px;line-height:1.55}
+.q .by{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.5}
+.q .by a{color:var(--text);text-decoration:underline}
+.meth{font-size:13px;color:#374151;line-height:1.6}
+.updated{font-size:11px;color:var(--muted);text-align:right;margin-top:14px}
+.popover{position:fixed;z-index:60;background:#fff;border:1px solid var(--border-hover);border-radius:6px;padding:8px 12px;font-size:12px;line-height:1.5;pointer-events:none;opacity:0;transition:opacity 120ms ease;box-shadow:0 4px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;max-width:230px}
+.popover.on{opacity:1}
+.popover b{font-weight:600}
+.popover .m{color:var(--muted)}
+@media (max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}.span2{grid-column:span 2}}
+@media (max-width:600px){.bento{grid-template-columns:1fr}.span2{grid-column:span 1}.price{font-size:36px}.sig-grid{grid-template-columns:1fr}.card{padding:16px}}
 </style>
 </head>
 <body>
 <div class='wrap'>
 <div class='bento'>
-<div class='card span2' style='animation-delay:0ms'>
+<div class='card span2'>
 <div class='sub'>Today's 22K gold price - Madurai</div>
-<div class='price'>INR <span class='count' data-final='11489'>11,489</span> / gram (22K)</div>
-<div class='meta'><span class='dot'></span>Live · Sat 21 Nov 2026 · IBJA/MCX benchmarks are Fri 20 Nov closes (Saturday is a non-trading day)<br>4-retailer midpoint via GoodReturns (pub 21 Nov 2026, 12:36 IST) · retailer cluster INR 11,465-11,515/g (0.4% spread) · Madurai proxied from the Tamil Nadu cluster, typically within ~INR 20-30/g of Chennai</div>
+<div class='price'>INR <span data-count='11490' data-comma='1'>11,490</span> <small>/ gram (22K)</small></div>
+<div class='meta'><span class='dot'></span>Live - 5 same-day sources agree within 0.44% · Retailer range INR 11,465-11,515/g</div>
+<div class='meta'>Economic Times (ET Wealth) - Nov 22, 2026, 03:27 PM IST · INR 15,000 buys ~1.3055 g</div>
 </div>
-<div class='card span2' style='animation-delay:40ms'>
+<div class='card span2'>
 <div class='sub'>Verdict</div>
-<div class='chips'><span class='chip wait'>WAIT</span><span class='chip med'>MEDIUM confidence</span></div>
-<div class='rationale'>Wait till Tue 24 Nov: gold's worst week since March may shave ~1% more; you are already at a 14-month low.</div>
+<div class='chips'><span class='chip buy'>BUY TODAY</span><span class='chip med'>MEDIUM CONFIDENCE</span></div>
+<p class='rat'>22K is ~9% below last week post-crash; further dips look smaller than bounce risk.</p>
 </div>
-<div class='card' style='animation-delay:80ms'>
+<div class='card'>
 <div class='sub'>vs Yesterday</div>
-<div class='big green'>−<span class='count' data-final='0.4' data-dec='1'>0.4</span>%</div>
-<div class='meta'>INR −46/g vs INR 11,535/g (20 Nov) · today is cheaper - favorable</div>
+<div class='bign f'><span data-count='0' data-dec='1'>0.0</span>%</div>
+<div class='mini'>INR 0/g - quotes unchanged vs 21 Nov</div>
 </div>
-<div class='card' style='animation-delay:120ms'>
+<div class='card'>
 <div class='sub'>vs Last Week</div>
-<div class='big green'>−<span class='count' data-final='8.6' data-dec='1'>8.6</span>%</div>
-<div class='meta'>INR −1,081/g vs ~INR 12,570/g (14 Nov) · web-derived estimate · favorable</div>
+<div class='bign g'><span data-count='-9' data-dec='1'>−9.0</span>%</div>
+<div class='mini'>−INR 1,140/g vs 15 Nov - today cheaper</div>
 </div>
-<div class='card' style='animation-delay:160ms'>
+<div class='card'>
 <div class='sub'>SIP window</div>
-<div class='mid'><span class='count' data-final='4'>4</span> days left</div>
-<div class='meta'>Deadline: Wed 25 Nov · window 21-25 Nov (day 1 of 5)</div>
+<div class='bign2'><span data-count='4'>4</span> days left</div>
+<div class='mini'>Deadline: 25 Nov</div>
 </div>
-<div class='card' style='animation-delay:200ms'>
+<div class='card'>
 <div class='sub'>Best day</div>
-<div class='mid'>Tue 24 Nov</div>
-<div class='meta green'>Save ~INR <span class='count' data-final='103'>103</span> (~0.009 g) on INR 15,000 · point estimate</div>
+<div class='bign2'>23 Nov</div>
+<div class='mini g'>Save ~INR <span data-count='39'>39</span> (~0.003 g) - projected</div>
 </div>
 </div>
-<section class='card' style='animation-delay:240ms'>
-<div class='label'>VERDICT DETAILS</div>
-<ol class='reasons'>
-<li><div class='rh'>Crash momentum continues</div><div class='rs'>Spot gold fell 8.7% this week (worst since March) and the IBJA 22K benchmark dropped INR 5,164 per 10g on Friday alone; signals skew 6 bearish vs 3 supportive for the next 2-3 sessions.</div></li>
-<li><div class='rh'>Fed hike near-certain</div><div class='rs'>CME FedWatch December odds jumped from ~77% to ~95-97% with a 50bp move being floated; continued repricing into Thanksgiving week can take another 1-2% off bullion.</div></li>
-<li><div class='rh'>14-month low already</div><div class='rs'>22K at INR 11,465-11,515/g is the cheapest since ~Sep 2025 and ~24% below January peaks, so waiting to 24 Nov adds only ~INR 103 (~0.7%) on a INR 15,000 instalment.</div></li>
-<li><div class='rh'>Wedding demand cushions</div><div class='rs'>Peak Nov-Dec weddings plus five straight months of ETF inflows held Saturday's retail cut to INR 45/g versus the INR 516/g benchmark drop, limiting further local downside.</div></li>
-<li><div class='rh'>Deadline buffer kept</div><div class='rs'>Buying on 24 Nov rather than the 25 Nov deadline preserves a one-day buffer; if MCX gold closes higher on Monday 23 Nov, abandon the wait and buy immediately.</div></li>
+<div class='col'>
+<div class='card'>
+<div class='seclab'>Verdict details</div>
+<ol class='vd'>
+<li><div class='vh'>Crash already priced</div><p>22K fell about INR 1,140/g (−9.0%) in 7 days and INR 1,540/g (−11.8%) in 30 days; the six-day rout ended with flat Sunday quotes (INR 11,465-11,515 unchanged vs Nov 21).</p></li>
+<li><div class='vh'>Timing gain trivial</div><p>Best projected day (Mon Nov 23, INR 11,460/g) is only INR 30/g (0.3%) below today's INR 11,490 midpoint - about INR 39 extra gold on an INR 15,000 SIP (~0.003 g).</p></li>
+<li><div class='vh'>Bounce risk live</div><p>Wedding footfalls are rising (Crisil via Bloomberg) and India/China physical demand surged at 14-month lows; WGC and Kitco expect central-bank and investment demand to support prices into year-end.</p></li>
+<li><div class='vh'>Hawkish Fed overhang</div><p>CME FedWatch prices ~90-97% odds of a December 8-9 hike (Waller floated 50 bps; Cook wants more), with a 19-month-high dollar (DXY ~103.8) - but after −9% this is mostly in the price, capping further dips near INR 11,200-11,300/g.</p></li>
+<li><div class='vh'>Rupee relief</div><p>USD/INR eased ~0.7% to ~92.66 on Friday and the US 10Y slipped ~15-20 bps to ~4.95%, together trimming import and opportunity-cost pressure by roughly INR 50-100/g.</p></li>
 </ol>
-<div class='save'>Projected saving by waiting: ~INR 103 (~0.009 g) - INR 15,000 buys ~1.3146 g on Tue 24 Nov vs ~1.3056 g today. Point estimate only: the ±2% daily band means the realised outcome could range from ~INR 300 saved to ~INR 300 extra cost if a relief bounce hits.</div>
-<div class='abort'><b>Abort trigger:</b> if MCX gold closes higher on Mon 23 Nov, or spot gold reclaims USD 3,600, buy on Tue 24 Nov morning without waiting further.</div>
-<div class='xnote'>Cross-month note: December opens with a near-certain Fed hike (8-9 Dec); early-December rates could dip marginally lower, but that difference sits inside the ±2% daily noise band - complete the November instalment in this window rather than skipping it.</div>
-<div class='label' style='margin-top:20px'>SIP WINDOW - DAY BY DAY</div>
-<div class='tw'><table>
-<thead><tr><th>Date</th><th>Status</th><th>Point (INR/g)</th><th>Band (INR/g)</th><th class='wr'>Note</th></tr></thead>
-<tbody>
-<tr><td>21 Nov - Sat</td><td><span class='tag'>Actual</span></td><td>11,489</td><td>11,465 - 11,515</td><td class='wr'>Today - 4-retailer midpoint; rank 5 of 5</td></tr>
-<tr><td>22 Nov - Sun</td><td><span class='tag proj'>Projected</span></td><td>11,485</td><td>11,440 - 11,560</td><td class='wr'>Non-trading day; retail rates typically hold; rank 4 of 5</td></tr>
-<tr><td>23 Nov - Mon</td><td><span class='tag proj'>Projected</span></td><td>11,440</td><td>11,260 - 11,660</td><td class='wr'>MCX reopens; post-crash session could follow through lower or bounce; rank 3 of 5</td></tr>
-<tr><td>24 Nov - Tue</td><td><span class='tag proj'>Projected</span></td><td>11,410</td><td>11,200 - 11,700</td><td class='wr'><span class='green'><b>Recommended buy day</b></span> - keeps a one-day buffer; rank 2 of 5</td></tr>
-<tr><td>25 Nov - Wed</td><td><span class='tag proj'>Projected</span></td><td>11,400</td><td>11,180 - 11,720</td><td class='wr'>Lowest point estimate but deadline day - no buffer left; rank 1 of 5</td></tr>
-</tbody>
-</table></div>
-<div class='note' style='margin-top:10px'>Projection basis: momentum (spot −8.7% w/w, IBJA 22K −4.4% Fri) + near-certain 8-9 Dec Fed hike repricing + Thanksgiving-week thin liquidity, offset by wedding demand, central bank buying and a possible geopolitical bounce. Point path drifts −0.3 to −0.5% per day with ±2% daily uncertainty bands; best-to-worst point spread is only INR 89/g (0.8%) - well inside the noise. Jewellers in Madurai (GRT, Malabar, Joyalukkas, Kalyan, Lalithaa, Vummidi) remain open Sat/Sun at Friday-Saturday posted rates.</div>
-</section>
-<section class='card' style='animation-delay:280ms'>
-<div class='label'>PRICE HISTORY</div>
+<p class='cons'><b>Expert consensus:</b> IBJA President Prithviraj Kothari advises buying part now - “waiting has its own cost”; Augmont's Aarav Bafna says take advantage of current prices for weddings; both favour staging purchases over 8-12 weeks (ET, Nov 21).</p>
+<p class='riskline'><b>Risk if you delay:</b> putting it off past Nov 23-24 risks a wedding-demand or Hormuz-driven bounce of INR 100-240/g (1-2%) - roughly 3-6x the INR 39 maximum projected saving.</p>
+<p class='note'><b>December cycle:</b> a hawkish Dec 8-9 FOMC dot plot could pull 22K toward INR 11,150-11,300 (Wall Street bear case), but wedding demand and above-band CPI (6.09%) should cushion - expected December difference vs today is within roughly ±2%.</p>
+<p class='note'><b>Window calendar:</b> 23 Nov MCX/IBJA reopen (first test of the pause) · 26 Nov US Thanksgiving, thin liquidity · 29 Nov OPEC+ meeting · 8-9 Dec FOMC decision and dot plot · ~12 Dec India November CPI · Nov-Dec peak wedding season.</p>
+</div>
+<div class='card'>
+<div class='seclab'>Price history</div>
+<p class='hint'>Price log created with this run - daily history accrues from tomorrow. The 10D and This-month views use a web-reconstructed 22K series plus SIP-window projections; other views populate as the log builds.</p>
 <div class='tabs'>
 <button class='tabbtn active' data-view='10d' type='button'>10D</button>
 <button class='tabbtn' data-view='30d' type='button'>30D</button>
 <button class='tabbtn' data-view='60d' type='button'>60D</button>
 <button class='tabbtn' data-view='month' type='button'>This month</button>
-<button class='tabbtn' data-view='lmonth' type='button'>Last month</button>
+<button class='tabbtn' data-view='lastmonth' type='button'>Last month</button>
 </div>
-<div class='view on' data-view='10d' style='display:block'>
-<div class='legend'><span><span class='sw solid'></span>Actual</span><span><span class='sw dash'></span>Projected</span><span><span class='sw best'></span>Best day</span><span class='lgnote'>17-25 Nov 2026 · INR per gram (22K) · INR 15,000 SIP</span></div>
-<svg class='chart' viewBox='0 0 800 270' role='img' aria-label='Daily 22K gold price bars, 17 to 25 November 2026, actual and projected'>
-<line x1='60' y1='36' x2='790' y2='36' stroke='#e5e7eb'/>
-<line x1='60' y1='117' x2='790' y2='117' stroke='#e5e7eb'/>
-<line x1='60' y1='198' x2='790' y2='198' stroke='#e5e7eb'/>
-<line x1='60' y1='230' x2='790' y2='230' stroke='#d1d5db'/>
-<text x='54' y='40' text-anchor='end' font-size='11' fill='#6b7280'>12,500</text>
-<text x='54' y='121' text-anchor='end' font-size='11' fill='#6b7280'>12,000</text>
-<text x='54' y='202' text-anchor='end' font-size='11' fill='#6b7280'>11,500</text>
-<rect class='bar' x='74' y='33' width='53' height='197' fill='#374151' data-d='17 Nov' data-p='INR 12,520/g (actual)' data-x='Today is INR 1,031/g (9.0%) cheaper than this day'><title>17 Nov: INR 12,520/g</title></rect>
-<rect class='bar' x='155' y='74' width='53' height='156' fill='#374151' data-d='18 Nov' data-p='INR 12,265/g (actual)' data-x='Today is INR 776/g (6.8%) cheaper than this day'><title>18 Nov: INR 12,265/g</title></rect>
-<rect class='bar' x='236' y='112' width='53' height='118' fill='#374151' data-d='19 Nov' data-p='INR 12,030/g (actual)' data-x='Today is INR 541/g (4.7%) cheaper than this day'><title>19 Nov: INR 12,030/g</title></rect>
-<rect class='bar' x='317' y='188' width='53' height='42' fill='#374151' data-d='20 Nov' data-p='INR 11,560/g (actual)' data-x='Today is INR 71/g (0.6%) cheaper than this day'><title>20 Nov: INR 11,560/g</title></rect>
-<rect class='bar' x='398' y='199' width='53' height='31' fill='#374151' data-d='21 Nov (today)' data-p='INR 11,489/g (actual midpoint)' data-x='Today - 4-retailer midpoint of 11,465-11,515/g'><title>21 Nov: INR 11,489/g</title></rect>
-<rect class='bar' x='479' y='200' width='53' height='30' fill='transparent' stroke='#6b7280' stroke-width='1.5' stroke-dasharray='4 3' data-d='22 Nov' data-p='INR 11,485/g (projected)' data-x='Today is INR 4/g (0.03%) pricier than this day'><title>22 Nov: INR 11,485/g (projected)</title></rect>
-<rect class='bar' x='560' y='207' width='53' height='23' fill='transparent' stroke='#6b7280' stroke-width='1.5' stroke-dasharray='4 3' data-d='23 Nov' data-p='INR 11,440/g (projected)' data-x='Today is INR 49/g (0.4%) pricier than this day'><title>23 Nov: INR 11,440/g (projected)</title></rect>
-<rect class='bar' x='641' y='212' width='53' height='18' fill='transparent' stroke='#6b7280' stroke-width='1.5' stroke-dasharray='4 3' data-d='24 Nov (best day)' data-p='INR 11,410/g (projected)' data-x='Today is INR 79/g (0.7%) pricier - projected best buy day'><title>24 Nov: INR 11,410/g (projected)</title></rect>
-<rect class='bar' x='722' y='214' width='53' height='16' fill='transparent' stroke='#6b7280' stroke-width='1.5' stroke-dasharray='4 3' data-d='25 Nov (deadline)' data-p='INR 11,400/g (projected)' data-x='Today is INR 89/g (0.8%) pricier - deadline day, no buffer'><title>25 Nov: INR 11,400/g (projected)</title></rect>
-<rect x='638' y='209' width='59' height='24' fill='none' stroke='#059669' stroke-width='2' pointer-events='none'/>
-<text x='100' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>17 Nov</text>
-<text x='181' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>18 Nov</text>
-<text x='262' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>19 Nov</text>
-<text x='343' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>20 Nov</text>
-<text x='424' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>21 Nov</text>
-<text x='505' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>22 Nov</text>
-<text x='586' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>23 Nov</text>
-<text x='667' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>24 Nov</text>
-<text x='748' y='252' text-anchor='middle' font-size='11' fill='#6b7280'>25 Nov</text>
+<div id='view-10d' class='view active'>
+<svg class='chart' viewBox='0 0 880 258' role='img' aria-label='22K gold price per gram in INR, 23 Oct to 25 Nov 2026, actual and projected'>
+<text class='ax' x='44' y='21' text-anchor='end'>13,200</text>
+<text class='ax' x='44' y='121' text-anchor='end'>12,200</text>
+<text class='ax' x='44' y='221' text-anchor='end'>11,200</text>
+<line class='grid' x1='52' y1='24' x2='868' y2='24'/>
+<line class='grid' x1='52' y1='124' x2='868' y2='124'/>
+<line class='axis' x1='52' y1='224' x2='868' y2='224'/>
+<rect class='bar' data-date='23 Oct' data-price='13030' x='66' y='41' width='40' height='183'><title>23 Oct: INR 13,030/g</title></rect>
+<rect class='bar' data-date='15 Nov' data-price='12615' x='134' y='82.5' width='40' height='141.5'><title>15 Nov: INR 12,615/g</title></rect>
+<rect class='bar' data-date='16 Nov' data-price='12540' x='202' y='90' width='40' height='134'><title>16 Nov: INR 12,540/g</title></rect>
+<rect class='bar' data-date='17 Nov' data-price='12470' x='270' y='97' width='40' height='127'><title>17 Nov: INR 12,470/g</title></rect>
+<rect class='bar' data-date='18 Nov' data-price='12216' x='338' y='122.4' width='40' height='101.6'><title>18 Nov: INR 12,216/g</title></rect>
+<rect class='bar' data-date='19 Nov' data-price='11980' x='406' y='146' width='40' height='78'><title>19 Nov: INR 11,980/g</title></rect>
+<rect class='bar' data-date='20 Nov' data-price='11979' x='474' y='146.1' width='40' height='77.9'><title>20 Nov: INR 11,979/g</title></rect>
+<rect class='bar' data-date='21 Nov' data-price='11490' x='542' y='195' width='40' height='29'><title>21 Nov: INR 11,490/g</title></rect>
+<rect class='bar' data-date='22 Nov' data-price='11490' x='610' y='195' width='40' height='29'><title>22 Nov (today): INR 11,490/g</title></rect>
+<rect class='bar best' data-date='23 Nov' data-price='11460' x='676' y='196' width='44' height='30'><title>23 Nov (projected best): INR 11,460/g</title></rect>
+<rect class='bar proj' data-date='23 Nov' data-price='11460' x='678' y='198' width='40' height='26'><title>23 Nov (projected best): INR 11,460/g</title></rect>
+<rect class='bar proj' data-date='24 Nov' data-price='11470' x='746' y='197' width='40' height='27'><title>24 Nov (projected): INR 11,470/g</title></rect>
+<rect class='bar proj' data-date='25 Nov' data-price='11495' x='814' y='194.5' width='40' height='29.5'><title>25 Nov (projected): INR 11,495/g</title></rect>
+<text class='xl' x='86' y='242'>23 Oct</text>
+<text class='xl' x='154' y='242'>15 Nov</text>
+<text class='xl' x='222' y='242'>16 Nov</text>
+<text class='xl' x='290' y='242'>17 Nov</text>
+<text class='xl' x='358' y='242'>18 Nov</text>
+<text class='xl' x='426' y='242'>19 Nov</text>
+<text class='xl' x='494' y='242'>20 Nov</text>
+<text class='xl' x='562' y='242'>21 Nov</text>
+<text class='xl t' x='630' y='242'>22 Nov</text>
+<text class='xl' x='698' y='242'>23 Nov</text>
+<text class='xl' x='766' y='242'>24 Nov</text>
+<text class='xl' x='834' y='242'>25 Nov</text>
 </svg>
-<div class='tw'><table>
-<thead><tr><th>Date</th><th>INR/g (22K)</th><th>Grams for INR 15,000</th><th>Delta vs today</th><th>Tag</th></tr></thead>
+<div class='legend'><span><span class='sw sw-a'></span>Actual (web-reconstructed)</span><span><span class='sw sw-p'></span>Projected</span><span><span class='sw sw-b'></span>Best projected day</span><span>Y-axis truncated at INR 11,200/g</span></div>
+<div class='tscroll'><table class='hist'>
+<thead><tr><th>Date</th><th>INR / gram (22K)</th><th>Grams at INR 15,000</th><th>Δ vs today</th><th>Tag</th></tr></thead>
 <tbody>
-<tr><td>17 Nov</td><td>12,520</td><td>1.1981 g</td><td class='green'>+1,031 (+9.0%)</td><td><span class='tag'>Actual</span></td></tr>
-<tr><td>18 Nov</td><td>12,265</td><td>1.2230 g</td><td class='green'>+776 (+6.8%)</td><td><span class='tag'>Actual</span></td></tr>
-<tr><td>19 Nov</td><td>12,030</td><td>1.2469 g</td><td class='green'>+541 (+4.7%)</td><td><span class='tag'>Actual</span></td></tr>
-<tr><td>20 Nov</td><td>11,560</td><td>1.2976 g</td><td class='green'>+71 (+0.6%)</td><td><span class='tag'>Actual</span></td></tr>
-<tr><td>21 Nov (today)</td><td>11,489</td><td>1.3056 g</td><td>—</td><td><span class='tag'>Actual</span></td></tr>
-<tr><td>22 Nov</td><td>11,485</td><td>1.3060 g</td><td class='red'>−4 (−0.03%)</td><td><span class='tag proj'>Projected</span></td></tr>
-<tr><td>23 Nov</td><td>11,440</td><td>1.3112 g</td><td class='red'>−49 (−0.4%)</td><td><span class='tag proj'>Projected</span></td></tr>
-<tr><td>24 Nov</td><td>11,410</td><td>1.3146 g</td><td class='red'>−79 (−0.7%)</td><td><span class='tag best'>Best day</span></td></tr>
-<tr><td>25 Nov</td><td>11,400</td><td>1.3158 g</td><td class='red'>−89 (−0.8%)</td><td><span class='tag proj'>Deadline</span></td></tr>
+<tr><td>23 Oct</td><td>13,030</td><td>1.1520 g</td><td class='g'>−1,540 (−11.8%)</td><td><span class='tag'>Actual · 30-day ref</span></td></tr>
+<tr><td>15 Nov</td><td>12,615</td><td>1.1898 g</td><td class='g'>−1,125 (−8.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>16 Nov</td><td>12,540</td><td>1.1962 g</td><td class='g'>−1,050 (−8.4%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>17 Nov</td><td>12,470</td><td>1.2029 g</td><td class='g'>−980 (−7.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>18 Nov</td><td>12,216</td><td>1.2279 g</td><td class='g'>−726 (−5.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>19 Nov</td><td>11,980</td><td>1.2521 g</td><td class='g'>−490 (−4.1%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>20 Nov</td><td>11,979</td><td>1.2522 g</td><td class='g'>−489 (−4.1%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>21 Nov</td><td>11,490</td><td>1.3055 g</td><td class='f'>0 (0.0%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr class='today'><td>22 Nov · today</td><td>11,490</td><td>1.3055 g</td><td class='f'>—</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>23 Nov</td><td>11,460</td><td>1.3089 g</td><td class='r'>+30 (+0.3%)</td><td><span class='tag best'>Projected · best</span></td></tr>
+<tr><td>24 Nov</td><td>11,470</td><td>1.3078 g</td><td class='r'>+20 (+0.2%)</td><td><span class='tag proj'>Projected</span></td></tr>
+<tr><td>25 Nov</td><td>11,495</td><td>1.3049 g</td><td class='g'>−5 (−0.04%)</td><td><span class='tag proj'>Projected</span></td></tr>
 </tbody>
 </table></div>
-<div class='note' style='margin-top:10px'>Delta = that day vs today (INR/g and %). Green = today cheaper than that day (favorable); red = today pricier (unfavorable).</div>
-<div class='takeaway'><b>Takeaway:</b> every session since 17 Nov has got cheaper - waiting for the projected Tue 24 Nov low adds ~0.009 g (~INR 103) on a INR 15,000 instalment, while buying on 17 Nov at INR 12,520/g would have left you with ~0.11 g less gold than at today's rate.</div>
-<div class='note' style='margin-top:10px'>Actuals 17-20 Nov: Tanishq 22K series via GoodReturns; today's bar is the 4-retailer midpoint. The log sheet is empty before 17 Nov, so 14-16 Nov are unavailable. 22-25 Nov: momentum-based point projections with ±2% daily bands; 25 Nov is the deadline. Hover any bar for date, price and delta vs today.</div>
+<p class='takeaway'><b>Takeaway:</b> at INR 11,490/g, today's INR 15,000 SIP buys ~1.3055 g - the best rate in the reconstructed series. The projected best day (23 Nov, INR 11,460/g) would add only ~0.0034 g (≈ INR 39).</p>
+<p class='chartnote'>23 Oct is the 30-day reference anchor, shown for context · 15-22 Nov web-reconstructed from public sources (Paytm Madurai table, Groww TN, Kotak Neo India average, retailer midpoint) · 23-25 Nov projected.</p>
 </div>
-<div class='view' data-view='30d'>
-<div class='empty'>History building - full 30-day view will populate once 25 more days of data are logged.</div>
-<div class='note' style='text-align:center'>Web reference points meanwhile: 31 Oct India 22K indicative INR 12,688/g (goldpriceindia.com) - basis of the −9.5% vs-30-day delta; IBJA PM 916 benchmark INR 11,865/g (19 Nov) and INR 11,348.6/g (20 Nov close) via Mathrubhumi.</div>
-</div>
-<div class='view' data-view='60d'>
-<div class='empty'>History building - full 60-day view will populate once 55 more days of data are logged.</div>
-</div>
-<div class='view' data-view='month'>
-<div class='empty'>History building - full November view will populate once 9 more days of data are logged.</div>
-</div>
-<div class='view' data-view='lmonth'>
-<div class='empty'>History building - the October retrospective will populate once a complete prior month is logged.</div>
-</div>
-</section>
-<section class='card' style='animation-delay:320ms'>
-<div class='label'>MARKET SIGNALS</div>
-<div class='siggrid'>
-<div class='sig'>
-<div class='signame'>International spot gold</div>
-<div class='sigcur'><span class='red'>↓</span> USD 3,537.90/oz · Fri 20 Nov close · intraday low USD 3,502.93, weakest since Sep 2025</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Strongly bearish - each 1% spot fall maps to roughly INR 110-115/g on domestic 22K, so the ~8% weekly drop explains most of the ~INR 1,000/g local decline.</div>
-<div class='sigsrc'>Source: <a href='https://www.kitco.com/charts/gold' target='_blank' rel='noopener'>Kitco</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>USD/INR</div>
-<div class='sigcur'><span class='red'>→</span> ~93.5 · USDINR 26-Nov futures 93.535 (Fri −0.47%) · DXY 103.54 near a 19-month high</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Mildly bearish for INR gold (−0.3% to −0.5%) - a stable-to-stronger rupee removes the customary cushion against falling dollar gold.</div>
-<div class='sigsrc'>Source: <a href='https://www.moneycontrol.com/markets/currencies/' target='_blank' rel='noopener'>Moneycontrol</a> / Business Standard</div>
-</div>
-<div class='sig'>
-<div class='signame'>US Fed rate expectations</div>
-<div class='sigcur'><span class='red'>↑</span> ~95-97% odds of a 25bp hike on 8-9 Dec (up from ~77% in early Nov) · 50bp move being floated · current range 3.75-4.00%</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Strongly bearish near-term - near-certain December tightening plus 2027 hike talk keeps real yields rising and can shave another 1-2% off bullion before the meeting.</div>
-<div class='sigsrc'>Source: CME FedWatch via <a href='https://247wallst.com/investing/2026/11/18/traders-now-see-a-95-chance-the-fed-hikes-rates-in-december/' target='_blank' rel='noopener'>247wallst</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>US 10Y Treasury yield</div>
-<div class='sigcur'><span class='red'>↓</span> 4.92% · Fri 20 Nov close (2Y 4.63%) · eased ~23bp on the week but near multi-decade highs</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Bearish backdrop - ~5% yields raise gold's opportunity cost, though the two-day safety dip is what softened Friday's crash.</div>
-<div class='sigsrc'>Source: <a href='https://seekingalpha.com/article/4970742-treasury-yields-snapshot-november-20-2026' target='_blank' rel='noopener'>Seeking Alpha</a> / FRED DGS10</div>
-</div>
-<div class='sig'>
-<div class='signame'>MCX gold futures / domestic benchmarks</div>
-<div class='sigcur'><span class='red'>↓</span> MCX gold −4.32% Friday · IBJA 916 benchmark −4.4% on 20 Nov · three consecutive down sessions</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Bearish momentum - domestic futures have fully priced the crash, so Monday's open risks follow-through weakness of another 1-2% unless a technical bounce intervenes.</div>
-<div class='sigsrc'>Source: <a href='https://www.businesstoday.in/personal-finance/story/gold-silver-prices-on-november-21-check-latest-rates-in-delhi-mumbai-kolkata-other-cities-568869-2026-11-21' target='_blank' rel='noopener'>Business Today</a> / Moneycontrol</div>
-</div>
-<div class='sig'>
-<div class='signame'>Nifty 50 direction</div>
-<div class='sigcur'><span class='red'>↑</span> Closed 25,800.60 Fri (+1.12% d/d, +2.61% w/w) · nine-month high · Nifty Bank at record 64,635</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Mildly bearish - Indian risk-on with record bank stocks diverts household savings from gold, a small (0-1%) but persistent headwind while equities rally.</div>
-<div class='sigsrc'>Source: <a href='https://www.business-standard.com/markets/news/markets-gain-2-6-on-fpi-inflows-rupee-rally-and-cooling-crude-oil-prices-126112000973_1.html' target='_blank' rel='noopener'>Business Standard</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>Crude oil</div>
-<div class='sigcur'><span class='amber'>↓</span> Brent USD 92.57/bbl Fri (+0.64% d/d, −3.4% w/w) · third weekly decline · WTI 83.98</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Mixed-to-bearish - USD 90+ crude keeps Indian inflation and global tightening bets alive, hurting gold via the rates channel more than the inflation-hedge channel helps.</div>
-<div class='sigsrc'>Source: <a href='https://economictimes.indiatimes.com/markets/commodities/news/oil-price-today-november-20-brent-crude-rises-to-93-as-fresh-houthi-attacks-heighten-worries-what-are-experts-saying/articleshow/136010579.cms' target='_blank' rel='noopener'>Economic Times</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>India CPI / RBI policy</div>
-<div class='sigcur'><span class='amber'>↑</span> Oct 2026 CPI 6.09% (Sep 5.54%) · above the 6% band for the first time since Oct 2024 · food 8.94% · Tamil Nadu 7.29% · repo 5.50%</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Two-sided, net mildly bearish short-term - high CPI cements further RBI tightening and raises gold's carrying cost, while the long-run hedge case builds only slowly.</div>
-<div class='sigsrc'>Source: MoSPI / <a href='https://tradingeconomics.com/india/inflation-cpi' target='_blank' rel='noopener'>TradingEconomics</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>Central bank gold buying</div>
-<div class='sigcur'><span class='green'>↑</span> Q3 2026 net purchases 321t (+42% y/y, best quarter since Q4 2024) · YTD 675t · Sep alone 61t · ETFs +211t in Q3 to record holdings</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Supportive floor - 600-700t/yr official buying plus record ETF holdings historically absorbs a large share of selloffs, arguing against panic-deferring the SIP beyond this window.</div>
-<div class='sigsrc'>Source: <a href='https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q3-2026/central-banks' target='_blank' rel='noopener'>World Gold Council</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>Festival / wedding season demand</div>
-<div class='sigcur'><span class='green'>↑</span> Festive buying healthy and broad-based (WGC, 17 Nov) · ETF inflows a fifth straight month into Nov · imports rebounded on restocking</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Supportive - local premiums are holding up: retailers trimmed only INR 45/g on Saturday against a INR 516/g benchmark drop on Friday, capping further local downside.</div>
-<div class='sigsrc'>Source: <a href='https://www.gold.org/goldhub/gold-focus/2026/11/india-gold-market-update-gold-demand-gets-festive-boost' target='_blank' rel='noopener'>World Gold Council India update</a></div>
-</div>
-<div class='sig'>
-<div class='signame'>Geopolitical risk (West Asia)</div>
-<div class='sigcur'><span class='green'>↑</span> Houthi missile attacks on Riyadh + Strait of Hormuz tanker incidents (20-21 Nov) · tensions escalating</div>
-<div class='sigimp'><span class='ilab'>Gold impact:</span> Mildly supportive - the safe-haven bid is currently overwhelmed by rate fear, but any escalation could trigger a quick +1-3% relief bounce inside the SIP window.</div>
-<div class='sigsrc'>Source: <a href='https://economictimes.indiatimes.com/markets/commodities/news/oil-price-today-november-20-brent-crude-rises-to-93-as-fresh-houthi-attacks-heighten-worries-what-are-experts-saying/articleshow/136010579.cms' target='_blank' rel='noopener'>Economic Times</a> / Business Today</div>
-</div>
-</div>
-</section>
-<section class='card' style='animation-delay:360ms'>
-<div class='label'>ANALYST VIEW</div>
-<div class='q'>
-<div class='qt'>“Spot gold ended Friday near $3,537.90 an ounce at 5 p.m. ET, down $86.30 or 2.38 percent on the day.”</div>
-<div class='by'>Tobi Opeyemi Amure - <a href='https://financefeeds.com/gold-price-today-3538-saturday-week-ahead-after-9-percent-weekly-drop-bull-3700-bear-3420/' target='_blank' rel='noopener'>FinanceFeeds</a> - 21 Nov 2026</div>
-</div>
-<div class='q'>
-<div class='qt'>“Gold ended the week at USD 3,543.60 an ounce on Kitco's spot close, down 8.71%, its worst week since March by Reuters' count.”</div>
-<div class='by'>Sound Money Report (Nugget 58) - <a href='https://soundmoneyreport.substack.com/p/gold-got-sold-because-it-was-the' target='_blank' rel='noopener'>Substack</a> - 21 Nov 2026</div>
-</div>
-<div class='q'>
-<div class='qt'>“Since Saturday, November 21, is a non-trading day for the IBJA benchmark, Friday's closing rates are being used as the latest available reference prices.”</div>
-<div class='by'>Money Desk - <a href='https://english.mathrubhumi.com/news/money/gold-silver-prices-today-november-21-2026-lgw5eig7' target='_blank' rel='noopener'>Mathrubhumi English</a> - 21 Nov 2026, 08:16 IST</div>
-</div>
-<div class='q'>
-<div class='qt'>“Prices of precious metals remained volatile on November 21 ... due to rising expectations of US Federal Reserve interest rate hikes.”</div>
-<div class='by'>Business Today Desk - <a href='https://www.businesstoday.in/personal-finance/story/gold-silver-prices-on-november-21-check-latest-rates-in-delhi-mumbai-kolkata-other-cities-568869-2026-11-21' target='_blank' rel='noopener'>Business Today</a> - 21 Nov 2026, 10:23 IST</div>
-</div>
-<div class='q'>
-<div class='qt'>“Lower prices and the ongoing wedding season should support jewellery demand, though any material rise in prices could temper buying.”</div>
-<div class='by'>World Gold Council - <a href='https://www.gold.org/goldhub/gold-focus/2026/11/india-gold-market-update-gold-demand-gets-festive-boost' target='_blank' rel='noopener'>gold.org India market update</a> - 17 Nov 2026</div>
-</div>
-<div class='note'>Showing 5 of 7 quotes collected for 21 Nov - prioritising price action, benchmark mechanics and the demand outlook.</div>
-</section>
-<section class='card' style='animation-delay:400ms'>
-<div class='label'>SOURCE COVERAGE</div>
-<div class='sub' style='margin-bottom:10px'>Used for today's quote - same-day prints and benchmark brackets</div>
-<div class='tw'><table>
-<thead><tr><th class='wr'>Source</th><th class='wr'>Latest print</th><th>Role</th></tr></thead>
+<div id='view-30d' class='view'><div class='empty'>History building - full 30-day view will populate once 30 more days of data are logged.</div></div>
+<div id='view-60d' class='view'><div class='empty'>History building - full 60-day view will populate once 60 more days of data are logged.</div></div>
+<div id='view-month' class='view'>
+<svg class='chart' viewBox='0 0 880 258' role='img' aria-label='22K gold price per gram in INR, November 2026, actual and projected'>
+<text class='ax' x='44' y='21' text-anchor='end'>12,800</text>
+<text class='ax' x='44' y='121' text-anchor='end'>12,000</text>
+<text class='ax' x='44' y='221' text-anchor='end'>11,200</text>
+<line class='grid' x1='52' y1='24' x2='868' y2='24'/>
+<line class='grid' x1='52' y1='124' x2='868' y2='124'/>
+<line class='axis' x1='52' y1='224' x2='868' y2='224'/>
+<rect class='bar' data-date='15 Nov' data-price='12615' x='67.1' y='47.1' width='44' height='176.9'><title>15 Nov: INR 12,615/g</title></rect>
+<rect class='bar' data-date='16 Nov' data-price='12540' x='141.3' y='56.5' width='44' height='167.5'><title>16 Nov: INR 12,540/g</title></rect>
+<rect class='bar' data-date='17 Nov' data-price='12470' x='215.5' y='65.3' width='44' height='158.7'><title>17 Nov: INR 12,470/g</title></rect>
+<rect class='bar' data-date='18 Nov' data-price='12216' x='289.6' y='97' width='44' height='127'><title>18 Nov: INR 12,216/g</title></rect>
+<rect class='bar' data-date='19 Nov' data-price='11980' x='363.8' y='126.5' width='44' height='97.5'><title>19 Nov: INR 11,980/g</title></rect>
+<rect class='bar' data-date='20 Nov' data-price='11979' x='438' y='126.6' width='44' height='97.4'><title>20 Nov: INR 11,979/g</title></rect>
+<rect class='bar' data-date='21 Nov' data-price='11490' x='512.2' y='187.8' width='44' height='36.2'><title>21 Nov: INR 11,490/g</title></rect>
+<rect class='bar' data-date='22 Nov' data-price='11490' x='586.4' y='187.8' width='44' height='36.2'><title>22 Nov (today): INR 11,490/g</title></rect>
+<rect class='bar best' data-date='23 Nov' data-price='11460' x='658.5' y='189.5' width='48' height='36.5'><title>23 Nov (projected best): INR 11,460/g</title></rect>
+<rect class='bar proj' data-date='23 Nov' data-price='11460' x='660.5' y='191.5' width='44' height='32.5'><title>23 Nov (projected best): INR 11,460/g</title></rect>
+<rect class='bar proj' data-date='24 Nov' data-price='11470' x='734.7' y='190.3' width='44' height='33.7'><title>24 Nov (projected): INR 11,470/g</title></rect>
+<rect class='bar proj' data-date='25 Nov' data-price='11495' x='808.9' y='187.1' width='44' height='36.9'><title>25 Nov (projected): INR 11,495/g</title></rect>
+<text class='xl' x='89.1' y='242'>15 Nov</text>
+<text class='xl' x='163.3' y='242'>16 Nov</text>
+<text class='xl' x='237.5' y='242'>17 Nov</text>
+<text class='xl' x='311.6' y='242'>18 Nov</text>
+<text class='xl' x='385.8' y='242'>19 Nov</text>
+<text class='xl' x='460' y='242'>20 Nov</text>
+<text class='xl' x='534.2' y='242'>21 Nov</text>
+<text class='xl t' x='608.4' y='242'>22 Nov</text>
+<text class='xl' x='682.5' y='242'>23 Nov</text>
+<text class='xl' x='756.7' y='242'>24 Nov</text>
+<text class='xl' x='830.9' y='242'>25 Nov</text>
+</svg>
+<div class='legend'><span><span class='sw sw-a'></span>Actual (web-reconstructed)</span><span><span class='sw sw-p'></span>Projected</span><span><span class='sw sw-b'></span>Best projected day</span><span>Y-axis truncated at INR 11,200/g</span></div>
+<div class='tscroll'><table class='hist'>
+<thead><tr><th>Date</th><th>INR / gram (22K)</th><th>Grams at INR 15,000</th><th>Δ vs today</th><th>Tag</th></tr></thead>
 <tbody>
-<tr><td class='wr'>Malabar Gold &amp; Diamonds (via GoodReturns, pub 21 Nov 12:36 IST)</td><td class='wr'>22K INR 11,465/g - site rate 21 Nov 09:44 IST</td><td>Midpoint input</td></tr>
-<tr><td class='wr'>Joyalukkas (via GoodReturns)</td><td class='wr'>22K INR 11,465/g - 21 Nov, flat across major states</td><td>Midpoint input</td></tr>
-<tr><td class='wr'>Tanishq (via GoodReturns)</td><td class='wr'>22K INR 11,515/g - 21 Nov, down INR 45 d/d</td><td>Midpoint input</td></tr>
-<tr><td class='wr'>Kalyan Jewellers (via GoodReturns, 20 Nov listing)</td><td class='wr'>22K INR 11,510/g</td><td>Midpoint input</td></tr>
-<tr><td class='wr'><a href='https://english.mathrubhumi.com/news/money/gold-silver-prices-today-november-21-2026-lgw5eig7' target='_blank' rel='noopener'>Mathrubhumi English</a> - TN indicative</td><td class='wr'>INR 11,509/g - 21 Nov 08:16 IST (Chennai/Coimbatore)</td><td>Cross-check</td></tr>
-<tr><td class='wr'><a href='https://ratetoday.co.in/gold/chennai' target='_blank' rel='noopener'>RateToday</a> - Chennai live board</td><td class='wr'>INR 11,465/g - 21 Nov</td><td>Cross-check</td></tr>
-<tr><td class='wr'>IBJA PM 916 benchmark (via Mathrubhumi)</td><td class='wr'>INR 11,348.6/g - 20 Nov close (Saturday non-trading)</td><td>Lower bracket</td></tr>
-<tr><td class='wr'><a href='https://www.kotakneo.com/gold-rates/' target='_blank' rel='noopener'>Kotak Neo</a> - India average</td><td class='wr'>INR 11,979/g - 21 Nov, tax-inclusive methodology</td><td>Upper bracket</td></tr>
+<tr><td>15 Nov</td><td>12,615</td><td>1.1898 g</td><td class='g'>−1,125 (−8.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>16 Nov</td><td>12,540</td><td>1.1962 g</td><td class='g'>−1,050 (−8.4%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>17 Nov</td><td>12,470</td><td>1.2029 g</td><td class='g'>−980 (−7.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>18 Nov</td><td>12,216</td><td>1.2279 g</td><td class='g'>−726 (−5.9%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>19 Nov</td><td>11,980</td><td>1.2521 g</td><td class='g'>−490 (−4.1%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>20 Nov</td><td>11,979</td><td>1.2522 g</td><td class='g'>−489 (−4.1%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>21 Nov</td><td>11,490</td><td>1.3055 g</td><td class='f'>0 (0.0%)</td><td><span class='tag'>Actual</span></td></tr>
+<tr class='today'><td>22 Nov · today</td><td>11,490</td><td>1.3055 g</td><td class='f'>—</td><td><span class='tag'>Actual</span></td></tr>
+<tr><td>23 Nov</td><td>11,460</td><td>1.3089 g</td><td class='r'>+30 (+0.3%)</td><td><span class='tag best'>Projected · best</span></td></tr>
+<tr><td>24 Nov</td><td>11,470</td><td>1.3078 g</td><td class='r'>+20 (+0.2%)</td><td><span class='tag proj'>Projected</span></td></tr>
+<tr><td>25 Nov</td><td>11,495</td><td>1.3049 g</td><td class='g'>−5 (−0.04%)</td><td><span class='tag proj'>Projected</span></td></tr>
 </tbody>
 </table></div>
-<div class='sub' style='margin:16px 0 10px'>Excluded as stale</div>
-<div class='tw'><table>
-<thead><tr><th class='wr'>Source</th><th class='wr'>Reason for exclusion</th></tr></thead>
+<p class='takeaway'><b>Takeaway:</b> 22K has fallen ~9% since 15 Nov (INR 12,615 → 11,490/g); every projected window day sits within INR 35/g of today - the crash has already delivered.</p>
+<p class='chartnote'>15-22 Nov web-reconstructed · 23-25 Nov projected (best projected day outlined green) · Y-axis truncated at INR 11,200/g.</p>
+</div>
+<div id='view-lastmonth' class='view'><div class='empty'>History building - last-month (October 2026) view will populate once October data is backfilled into the price log.</div></div>
+</div>
+<div class='card'>
+<div class='seclab'>Market signals</div>
+<div class='sig-grid'>
+<div class='sig'><div class='name'>International spot gold (COMEX/LBMA)</div><div class='cur'><span class='arrow'>↘</span>$3,537.90/oz - Fri Nov 20 close (Kitco live, Nov 22)</div><div class='imp'><b>Gold impact:</b> Dominant driver - the ~8% USD-price drop maps to roughly INR 900-1,100/g lower 22K India quotes this week, and the Sunday pause suggests the pass-through is nearly complete.</div><div class='src'>Kitco (Nov 22); FinanceFeeds 13:30 GMT · 7d −7.9% · 30d −13.4%</div></div>
+<div class='sig'><div class='name'>MCX gold futures / IBJA benchmarks</div><div class='cur'><span class='arrow'>↘</span>MCX Dec ~INR 1,22,000-1,23,629/10g (Nov 20); IBJA Nov 20 AM 22K INR 12,092/g</div><div class='imp'><b>Gold impact:</b> MCX leads retail rates - after Friday's 3-4% crash, Monday's IBJA and retailer prints are likely flat-to-slightly-lower (about −INR 20-60/g), not a fresh rout.</div><div class='src'>Business Standard, Zee Business (Nov 20) · biggest weekly decline since March</div></div>
+<div class='sig'><div class='name'>USD/INR and dollar index</div><div class='cur'><span class='arrow'>↔</span>USD/INR ~92.66 (Nov 21, −0.66% on day); DXY ~103.8 - 19-month high</div><div class='imp'><b>Gold impact:</b> The 19-month-high dollar drove the global crash, but the rupee's ~0.7% Friday recovery trims import cost by roughly INR 40-60/g - a mild cushion for Indian buyers this week.</div><div class='src'>Moneycontrol, longforecast (Nov 21) · rupee recovered from ~93.3-93.9</div></div>
+<div class='sig'><div class='name'>US Fed rate expectations (Dec 8-9 FOMC)</div><div class='cur'><span class='arrow'>↓</span>CME FedWatch ~90-97% probability of a 25 bps hike; funds rate 3.75-4.00%</div><div class='imp'><b>Gold impact:</b> Core headwind - with odds near-certainty, most of the hike is priced in; residual risk is a hawkish dot plot, worth perhaps another 1-2% (INR 120-240/g) of 22K downside into December.</div><div class='src'>CME FedWatch via BigGo (Nov 20) · odds up from 76.3% a month ago to 96.9%</div></div>
+<div class='sig'><div class='name'>US 10-year Treasury yield</div><div class='cur'><span class='arrow'>↘</span>US 10Y ~4.92-4.95% (Nov 20); 2Y 4.63%</div><div class='imp'><b>Gold impact:</b> Falling ~15-20 bps this week eases the opportunity-cost squeeze on gold - roughly INR 50-100/g of support, partially offsetting Fed hawkishness.</div><div class='src'>US Treasury par curve, CNBC (Nov 20) · down from 5.12% on Nov 16</div></div>
+<div class='sig'><div class='name'>Nifty 50 direction</div><div class='cur'><span class='arrow'>↑</span>Nifty 25,800.60 (+1.12% Fri); Sensex 83,919.71 (+1.08%) - both 9-month highs</div><div class='imp'><b>Gold impact:</b> Risk-on Indian equities divert incremental savings away from gold and the earlier liquidation has stopped - capping any 22K rebound near INR 11,700-11,800/g near term.</div><div class='src'>Business Standard close report (Nov 20) · Nifty Bank record 64,635.20</div></div>
+<div class='sig'><div class='name'>Crude oil</div><div class='cur'><span class='arrow'>↔</span>Brent Jan futures $92.57 (Nov 20 settle); WTI $83.41; OPEC+ meets Nov 29</div><div class='imp'><b>Gold impact:</b> Oil near $90-100 keeps India's import bill and CPI elevated - a Hormuz spike would weaken the rupee and could add ~INR 100-200/g to 22K quickly (upside price risk for the SIP buyer).</div><div class='src'>Discovery Alert, EIA STEO (Nov 22) · −3.4% on the week, third straight weekly loss</div></div>
+<div class='sig'><div class='name'>India CPI / WPI</div><div class='cur'><span class='arrow'>↑</span>Oct 2026 CPI 6.09% (provisional), food 8.94% - first breach of the 6% band since Oct 2024</div><div class='imp'><b>Gold impact:</b> Above-band inflation historically lifts gold's domestic hedge demand - a supportive floor for 22K physical offtake even while global prices fall.</div><div class='src'>MoSPI release (Nov 12, 4:00 PM IST) · Nov CPI due ~Dec 12</div></div>
+<div class='sig'><div class='name'>Central bank gold buying</div><div class='cur'><span class='arrow'>↑</span>Q3 2026 net buying 321t (+42% y/y - highest since Q4 2024); YTD 675t (+6%)</div><div class='imp'><b>Gold impact:</b> Persistent official-sector buying is a structural floor - it limits further 22K downside in the SIP window to roughly 1-2% and underpins the buy-now case.</div><div class='src'>World Gold Council Q3 Demand Trends (Nov 3) · 2026 forecast raised to at least 848t</div></div>
+<div class='sig'><div class='name'>India festival / wedding season demand</div><div class='cur'><span class='arrow'>↑</span>Wedding-season footfalls rising in the Oct-Dec quarter; India and China physical demand surged on the price drop</div><div class='imp'><b>Gold impact:</b> Peak Nov-Dec wedding buying plus bargain hunting at 14-month lows should absorb supply - roughly INR 50-150/g of local premium support as the Nov 25 deadline nears.</div><div class='src'>Crisil via Bloomberg (Nov 6); WGC India sees Q4 improvement</div></div>
+<div class='sig'><div class='name'>Gold ETF flows (India / global)</div><div class='cur'><span class='arrow'>↔</span>Q3 ETF inflows 211t; holdings at a record 4,256t; WGC expects 2026 investment demand +200t</div><div class='imp'><b>Gold impact:</b> Trapped ETF holders may sell into rallies (capping rebounds near INR 11,800/g), but record holdings keep systematic dips shallow.</div><div class='src'>WGC via Kitco News (Nov 3); Upstox (Nov 22) · Jan-2026 record INR 24,040 cr inflow now underwater</div></div>
+<div class='sig'><div class='name'>Geopolitical risk</div><div class='cur'><span class='arrow'>→</span>Iran's Strait of Hormuz threat live; Persian Gulf tanker attacks tightened oil supply</div><div class='imp'><b>Gold impact:</b> Live Gulf escalation is an unpriced safe-haven trigger - an incident could add 1-2% (INR 120-240/g) to 22K within days, an upside risk that favours not delaying the SIP.</div><div class='src'>Discovery Alert, Reuters (Nov 22) · escalation risk live into the Nov 29 OPEC+ meeting</div></div>
+</div>
+</div>
+<div class='card'>
+<div class='seclab'>Analyst view</div>
+<div class='quotes'>
+<div class='q'><p>“Still, waiting has its own cost. Pent-up demand can push premiums up quickly. The sensible approach is to buy part now”</p><div class='by'>Prithviraj Kothari (President, IBJA) - <a href='https://economictimes.indiatimes.com/wealth/invest/gold-rate-price-today-24-down-from-january-2026-peaks-should-you-buy-jewellery-for-weddingsexperts-weigh-in/articleshow/136019840.cms' target='_blank' rel='noopener'>Economic Times (ET Wealth)</a> · Nov 21, 2026</div></div>
+<div class='q'><p>“For those with weddings approaching, it would be better to take advantage of the current prices rather than wait too long for another correction which is unpredictable”</p><div class='by'>Aarav Bafna (Director, Akoirah by Augmont) - <a href='https://economictimes.indiatimes.com/wealth/invest/gold-rate-price-today-24-down-from-january-2026-peaks-should-you-buy-jewellery-for-weddingsexperts-weigh-in/articleshow/136019840.cms' target='_blank' rel='noopener'>Economic Times (ET Wealth)</a> · Nov 21, 2026</div></div>
+<div class='q'><p>“In the end, it's more important to make a well-informed purchase than to try to time the market”</p><div class='by'>Kaushlendra Sinha (CEO, IAGES) - <a href='https://economictimes.indiatimes.com/wealth/invest/gold-rate-price-today-24-down-from-january-2026-peaks-should-you-buy-jewellery-for-weddingsexperts-weigh-in/articleshow/136019840.cms' target='_blank' rel='noopener'>Economic Times (ET Wealth)</a> · Nov 21, 2026</div></div>
+<div class='q'><p>“Demand is likely to improve in the December quarter as key festivals such as Diwali and the wedding season drive purchases”</p><div class='by'>Sachin Jain (India CEO, World Gold Council) - <a href='https://www.mining.com/web/indias-2026-gold-demand-seen-falling-to-six-year-low-on-price-rise/' target='_blank' rel='noopener'>Reuters via mining.com</a> · Nov 3, 2026</div></div>
+<div class='q'><p>“Gold Price Today $3,538: 60% of Wall Street Sees Lower”</p><div class='by'>Tobi Opeyemi Amure - <a href='https://financefeeds.com/gold-price-today-3538-sunday-week-ahead-thanksgiving-december-fed-hike-odds-bull-3700-bear-3430/' target='_blank' rel='noopener'>FinanceFeeds</a> · Nov 22, 2026, 13:30 GMT</div></div>
+</div>
+</div>
+<div class='card'>
+<div class='seclab'>Methodology</div>
+<p class='meth'>Today's 22K Madurai rate is the retailer-side midpoint of five same-day sources agreeing within 0.44% (under the 1% quoting threshold); IBJA and MCX are weekend-closed and their last prints serve as benchmark context only. Historical views are web-reconstructed until the daily price log accumulates. Verdict confidence: MEDIUM. Green deltas mean today is cheaper than the reference date; red means pricier. Informational only - not investment advice.</p>
+<div class='seclab' style='margin-top:16px'>Source coverage - today's 22K rate</div>
+<div class='tscroll'><table class='hist' style='min-width:480px'>
+<thead><tr><th>Source</th><th>Same-day 22K reading</th><th>Timestamp (IST)</th></tr></thead>
 <tbody>
-<tr><td class='wr'>Groww - Madurai page</td><td class='wr'>Page data from ~29 Aug 2026 (22K INR 14,505/g) despite recent indexing</td></tr>
-<tr><td class='wr'>goldchimp.in - Madurai</td><td class='wr'>Last-10-days table ends 5 Sep 2026</td></tr>
-<tr><td class='wr'>goldbiz.finvedik.com - Madurai</td><td class='wr'>Zero-change board with internally conflicting numbers, undated</td></tr>
-<tr><td class='wr'>goldpriceindia.com</td><td class='wr'>Dated 31 Oct 2026 - used only as the 30-day reference, not today's quote</td></tr>
-<tr><td class='wr'>Forbes Advisor - Tamil Nadu</td><td class='wr'>Table last updated 09-06-25</td></tr>
+<tr><td>Economic Times (ET Wealth)</td><td>Tanishq INR 11,515; Malabar / Kalyan / Joyalukkas INR 11,465</td><td>Nov 22, 03:27 PM</td></tr>
+<tr><td>The Open Press</td><td>Same quotes; city table incl. Chennai identical</td><td>Nov 22, 12:31 PM</td></tr>
+<tr><td>GoodReturns (Oneindia)</td><td>22K below INR 11,500 at top jewellers; selloff paused</td><td>Nov 22, 11:00 AM</td></tr>
+<tr><td>mygoldrates.com</td><td>Kalyan 22K INR 11,465</td><td>Nov 22, 07:09 PM</td></tr>
+<tr><td>Groww</td><td>Tamil Nadu 22K INR 11,511/g</td><td>Indexed Nov 22</td></tr>
 </tbody>
 </table></div>
-<div class='note' style='margin-top:10px'>NDTV was not cited per source policy. GoodReturns' own IBJA row of INR 12,062/g was treated as an outlier print vs Mathrubhumi's IBJA PM 916 quote of INR 11,348.6/g. The price-log sheet could not be located (first run), so the 10-day actuals above are the Tanishq 22K series from the 21 Nov GoodReturns article, and the vs-7-day / vs-30-day deltas are web-derived estimates flagged as such.</div>
-</section>
-<footer class='card' style='animation-delay:440ms'>
-<div class='label'>METHODOLOGY</div>
-<p class='meth'>Today's Madurai rate is the retailer-side midpoint of same-day 22K quotes (Malabar, Joyalukkas, Tanishq, Kalyan) via GoodReturns, cross-checked across 6+ same-day sources. Madurai is proxied from the Tamil Nadu cluster - typically within ~INR 20-30/g of Chennai - as no same-day Madurai-specific page was found; stale aggregator prints were excluded. Verdict confidence is MEDIUM: the 22-25 Nov path is a momentum-based point projection with ±2% daily bands, not a guarantee. Delta colors: green = today cheaper than the reference (favorable); red = today pricier. Informational only - not investment advice.</p>
-<div class='label' style='margin-top:16px'>SOURCES</div>
-<div class='srcs'>GoodReturns, Mathrubhumi English, RateToday, Kotak Neo, Kitco, FinanceFeeds, Sound Money Report, Business Today, Moneycontrol, Business Standard, CME FedWatch via 247wallst, Seeking Alpha, FRED, Economic Times, TradingEconomics, MoSPI, World Gold Council, JM Bullion</div>
-<div class='upd'>Last updated: 2026-11-21T14:12:51Z</div>
-</footer>
+<p class='chartnote'>Midpoint quoted: INR 11,490/g (spread INR 50/g = 0.44%, under the 1% threshold). No Madurai-specific same-day page was found; the Tamil Nadu flat retailer rate (One India One Gold Rate) applies to Madurai showrooms. Stale Madurai pages (Nov 19 and older) were excluded from quoting; GRT/Lalithaa/Vummidi same-day rates not found; NDTV excluded per instruction.</p>
+<div class='seclab' style='margin-top:16px'>Sources</div>
+<p class='chartnote'>Economic Times (ET Wealth), The Open Press, GoodReturns (Oneindia), mygoldrates.com, Groww, Kitco, FinanceFeeds, Business Standard, Moneycontrol, Bloomberg, Reuters via mining.com, World Gold Council, Crisil Ratings, MoSPI, CME FedWatch via BigGo Finance, Discovery Alert, Zee Business, Upstox, EconLearn, BeInCrypto</p>
+<div class='updated'>Last updated: 2026-11-22T19:44:10+05:30 (IST)</div>
 </div>
-<div id='pop'></div>
+</div>
+</div>
 <script>
 (function(){
+var TODAY=11490,busy=false;
+var tabs=[].slice.call(document.querySelectorAll('.tabbtn'));
+var views={};[].slice.call(document.querySelectorAll('.view')).forEach(function(v){views[v.id.slice(5)]=v;});
+var cur=views['10d'];if(cur)cur.style.opacity='1';
+tabs.forEach(function(t){t.addEventListener('click',function(){
+var k=t.getAttribute('data-view'),n=views[k];
+if(!n||n===cur||busy)return;busy=true;
+tabs.forEach(function(x){x.classList.toggle('active',x===t);});
+var old=cur;old.style.opacity='0';
+setTimeout(function(){old.classList.remove('active');old.style.opacity='';
+cur=n;n.classList.add('active');n.style.opacity='0';
+requestAnimationFrame(function(){requestAnimationFrame(function(){n.style.opacity='1';busy=false;});});},200);});});
+[].slice.call(document.querySelectorAll('[data-count]')).forEach(function(el){
+var t=parseFloat(el.getAttribute('data-count')),d=parseInt(el.getAttribute('data-dec')||'0',10),c=el.getAttribute('data-comma'),s=null;
+function fin(){return c?Math.round(t).toLocaleString('en-IN'):(t<0?'−'+Math.abs(t).toFixed(d):t.toFixed(d));}
+function step(ts){if(s===null)s=ts;var p=Math.min((ts-s)/800,1),e=1-Math.pow(1-p,3),v=t*e;
+el.textContent=c?Math.round(v).toLocaleString('en-IN'):v.toFixed(d);
+if(p<1)requestAnimationFrame(step);else el.textContent=fin();}
+requestAnimationFrame(step);});
+var pop=document.createElement('div');pop.className='popover';document.body.appendChild(pop);
+function show(r){var p=parseInt(r.getAttribute('data-price'),10),d=TODAY-p;
+var cls=d<0?'g':(d>0?'r':'m'),lab=d<0?'today cheaper':(d>0?'today pricier':'flat');
+var val=d===0?'0':(d<0?'−':'+')+Math.abs(d).toLocaleString('en-IN');
+pop.innerHTML='<b>'+r.getAttribute('data-date')+' 2026</b><span>INR '+p.toLocaleString('en-IN')+' / gram (22K)</span><span class='+cls+'>'+val+' INR/g vs today ('+lab+')</span>';
+var b=r.getBoundingClientRect();pop.classList.add('on');
+var x=Math.max(8,Math.min(b.left+b.width/2-pop.offsetWidth/2,window.innerWidth-pop.offsetWidth-8));
+var y=b.top-pop.offsetHeight-10;if(y<8)y=b.bottom+10;
+pop.style.left=x+'px';pop.style.top=y+'px';}
+[].slice.call(document.querySelectorAll('.bar')).forEach(function(r){
+r.addEventListener('mouseenter',function(){show(r);});
+r.addEventListener('mouseleave',function(){pop.classList.remove('on');});});
 var cards=[].slice.call(document.querySelectorAll('.card'));
 if('IntersectionObserver' in window){
-var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.06});
-cards.forEach(function(c){io.observe(c);});
-}else{cards.forEach(function(c){c.classList.add('in');});}
-cards.forEach(function(c){c.addEventListener('animationend',function(e){if(e.animationName==='fadeSlideUp'){c.classList.add('done');c.classList.remove('in');}});});
-setTimeout(function(){cards.forEach(function(c){if(!c.classList.contains('done')&&!c.classList.contains('in')){c.classList.add('done');}});},1800);
-var tabs=[].slice.call(document.querySelectorAll('.tabbtn'));
-var views=[].slice.call(document.querySelectorAll('.view'));
-tabs.forEach(function(t){t.addEventListener('click',function(){
-if(t.classList.contains('active')){return;}
-tabs.forEach(function(x){x.classList.toggle('active',x===t);});
-views.forEach(function(v){
-if(v.getAttribute('data-view')===t.getAttribute('data-view')){
-v.style.display='block';
-requestAnimationFrame(function(){requestAnimationFrame(function(){v.classList.add('on');});});
-}else{v.classList.remove('on');v.style.display='none';}
-});
-});});
-function countUp(el){
-var f=parseFloat(el.getAttribute('data-final'))||0;
-var d=parseInt(el.getAttribute('data-dec')||'0',10);
-var t0=null;
-function step(ts){
-if(!t0){t0=ts;}
-var p=Math.min((ts-t0)/800,1);
-p=1-Math.pow(1-p,3);
-var v=f*p;
-el.textContent=d>0?v.toFixed(d):Math.round(v).toLocaleString('en-IN');
-if(p<1){requestAnimationFrame(step);}
-}
-requestAnimationFrame(step);
-}
-[].forEach.call(document.querySelectorAll('.count'),countUp);
-var pop=document.getElementById('pop');
-if(pop){
-[].forEach.call(document.querySelectorAll('.bar'),function(r){
-r.addEventListener('mouseenter',function(){pop.innerHTML='<b>'+r.getAttribute('data-d')+'</b> · '+r.getAttribute('data-p')+'<br>'+r.getAttribute('data-x');pop.style.display='block';});
-r.addEventListener('mousemove',function(ev){pop.style.left=Math.min(ev.clientX+14,window.innerWidth-260)+'px';pop.style.top=Math.max(ev.clientY-70,8)+'px';});
-r.addEventListener('mouseleave',function(){pop.style.display='none';});
-});
-}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+if(!e.isIntersecting)return;
+e.target.style.animationDelay=Math.min(cards.indexOf(e.target)*40,480)+'ms';
+e.target.classList.add('in');io.unobserve(e.target);});},{threshold:0.08});
+cards.forEach(function(c){io.observe(c);});}
+else{cards.forEach(function(c){c.classList.add('in');});}
 })();
 </script>
 </body>
